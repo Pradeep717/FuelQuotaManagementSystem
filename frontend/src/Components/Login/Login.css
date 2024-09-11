@@ -123,3 +123,25 @@
 .register p a:hover{
     text-decoration: underline;
 }
+.pageBackground{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: wrap;
+    justify-content:space-between;
+    align-items:center;
+    
+}
+.left-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.horizontal{
+    display: flex;
+    flex-direction: row;
+    padding: 5%;
+    align-items: center;
+    gap: 5%;
+}
