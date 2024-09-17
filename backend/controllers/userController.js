@@ -2,6 +2,7 @@ import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import generateTokenAndSetCookie from '../utils/helpers/genarateTokenAndSetCookie.js';
 
+// Signup a new user
 const signupUser = async (req, res) => {
   try {
     const { name, email, password, role, phoneNumber } = req.body;
@@ -44,4 +45,31 @@ const signupUser = async (req, res) => {
   }
 };
 
-export { signupUser };
+// Login a user
+const loginUser = async (req, res) =>{
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    const isPasswordCorrect = user && (await bcrypt.compare(password, user.password));
+
+    if (isPasswordCorrect) {
+      generateTokenAndSetCookie(user._id, res);
+      
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phoneNumber: user.phoneNumber,
+      });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in loginUser: ", error.message);
+  }
+};
+
+export { signupUser, loginUser };
