@@ -1,53 +1,66 @@
 import React from 'react';
-import './Login.css';
+import './Login.css'; // Assuming your CSS file is in the same directory
 
-function Login() {
+const Login = () => {
   return (
-    <div className="container pageBackground">
-        <div className="left-column">
-            <div className="company-name">
-            <h1 className="title">
-                Fuel<span className='highlightedText'>Plus</span> Station!
-            </h1>
-            <h2 className="description">
-            "Fuel up for the journey, service that goes the extra mile!"
-            </h2>
+    <div className="container-log-sign">
+        <div className="login-container" id="login-container">
+        {/* Sign Up Form */}
+        <div className="form-container sign-up-container">
+            <form action="#">
+            <h1>Create Account</h1>
+            <div className="social-container">
+                <a href="https://img.icons8.com/?size=100&id=118498&format=png&color=000000" className="social"><i className="fab fa-facebook-f"></i></a>
+                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
             </div>
-        <div className="horizontal">
-        <div className="imageSection">
-          <div className="imageWrapper">
-              <img src="/src/assets/Images/shape.png" alt="Shape" className="shape" />
-              <img src="/src/assets/Images/petrol.png" alt="Petrol" className="petrol" />
-          </div>
+            <span>or use your email for registration</span>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button>Sign Up</button>
+            </form>
         </div>
-        <div className="login-container">
-            <div class="main-box">
-                    <h1>Log In</h1>
-                    <form action="">
-                        <div class="input-box">
-                            <span class="icon"><i data-feather="mail"></i></span>
-                            <input type="email" required/>
-                            <label>Email</label>
-                        </div>
-                        <div class="input-box">
-                            <span class="icon"><i data-feather="lock"></i></span>
-                            <input type="password" required/>
-                            <label>Password</label>
-                        </div>
-                        <div class="check">
-                            <label><input type="checkbox"/>Remeber me</label>
-                            <a href="#">Forget Password</a>
-                        </div>
-                        <button type="submit" class="btn">Login</button>
-                        <div class="register">
-                            <p>Don't have an account?<a href="/signup.html" class="register-link">Sign Up</a></p>
-                        </div>
-                    </form>
+
+        {/* Sign In Form */}
+        <div className="form-container sign-in-container">
+            <form action="#">
+            <h1>Sign in</h1>
+            <div className="social-container">
+                <a href="" className="social">
+                    <img src="https://img.icons8.com/?size=100&id=118468&format=png&color=1A1A1A" alt="Facebook Icon" />
+                </a>
+                <a href="#" className="social"><img src="https://img.icons8.com/?size=100&id=TSj6R0n3J3ru&format=png&color=1A1A1A" alt="Google Icon" /></a>
+                <a href="#" className="social"><img src="https://img.icons8.com/?size=100&id=ErvuoIU4kAzh&format=png&color=1A1A1A" alt="Linkedin Icon" /></a>
+            </div>
+            <div className="login-input">
+                <span>or use your account</span>
+                <input className='input' type="email" placeholder="Email" />
+                <input className='input' type="password" placeholder="Password" />
+                <a href="#">Forgot your password?</a>
+                <button className='button'>Sign In</button>
+            </div>
+            </form>
+        </div>
+
+        {/* Overlay Container */}
+        <div className="overlay-container">
+            <div className="overlay">
+            <div className="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button className="ghost" id="signIn">Sign In</button>
+            </div>
+            <div className="overlay-panel overlay-right">
+                <div className='line'>
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start your journey with us</p>
                 </div>
+                <button className="ghost" id="signUp">Sign Up</button>
+            </div>
+            </div>
         </div>
         </div>
-        </div>
-        
     </div>
   );
 }
