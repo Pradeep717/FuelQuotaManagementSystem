@@ -60,6 +60,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    margin-top: 15px;
 }
 
 .button:active {
@@ -124,6 +125,7 @@
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    height: 80vh;
 }
 
 .form-container {
