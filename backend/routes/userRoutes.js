@@ -6,7 +6,8 @@ import {
   updateUser,
   getUserProfile,
 } from "../controllers/userController.js";
-import protectRoute from "../middlewares/protectRoute.js";
+import { protectRoute } from "../middlewares/protectRoute.js";
+
 
 const router = express.Router();
 router.get("/profile/:username", getUserProfile);
