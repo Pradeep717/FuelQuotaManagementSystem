@@ -24,4 +24,22 @@ const protectRoute = async (req, res, next) => {
   }
 }
 
-export default protectRoute;
+const authorizeRole = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if(!user || !user.role ){
+      return res.status(401).json({ message: "You are not authorized to access this route" });
+    }
+
+    req.role = user.role;
+
+    next();
+    
+  } catch (error) {
+    res.status(401).json({ message: "You are not authorized to access this route" });
+    console.log("Error in authorizeRole: ", error.message
+    );
+  }
+}
+
+export { protectRoute, authorizeRole };
