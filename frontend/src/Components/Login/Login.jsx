@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.css'; // Assuming your CSS file is in the same directory
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -39,7 +40,10 @@ const Login = () => {
                     <h1>Hello, Friend!</h1>
                     <p>Enter your personal details and start your journey with us</p>
                 </div>
-                <button className="ghost" id="signUp">Sign Up</button>
+                <Link to="/signup">
+                    <button className="ghost" id="signUp">Sign Up</button>
+                </Link>
+             
             </div>
             </div>
         </div>

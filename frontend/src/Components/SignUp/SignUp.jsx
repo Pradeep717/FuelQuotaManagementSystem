@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignUp.css'; // Import the CSS file for styling
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   return (
@@ -28,7 +29,9 @@ const SignUp = () => {
         <div className="overlay-panel overlay-right">
           <h1>Welcome Back!</h1>
           <p>To keep connected with us please login with your personal info</p>
-          <button className="ghost button" id="signIn">Sign In</button>
+          <Link to="/login">
+            <button className="ghost button" id="signIn">Sign In</button>
+          </Link>
         </div>
       </div>
     </div>
