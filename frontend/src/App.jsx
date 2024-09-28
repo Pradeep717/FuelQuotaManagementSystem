@@ -7,6 +7,7 @@ import './App.css'
 import Start from './Components/Start/Start'
 import Login from './Components/Login/Login'
 import SignUp from './Components/SignUp/SignUp';
+import { AdminHome } from './Components/AdminHome/AdminHome';
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" element={<Start />} />
       <Route path="/login" element={<Login />} />
       <Route path='/signup' element={<SignUp />} />
+      <Route path='/admin' element={<AdminHome />} />
     </Routes>
   </Router>
   )

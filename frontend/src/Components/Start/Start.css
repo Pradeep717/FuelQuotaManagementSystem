@@ -83,7 +83,7 @@
     z-index: 1;
   }
   
-  .social{
+  .social-start{
     display: flex;
     flex-direction: row;
     justify-content: center;
