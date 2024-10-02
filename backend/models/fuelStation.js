@@ -21,6 +21,11 @@ const fuelStationSchema = new mongoose.Schema(
         ref: "Vehicle",
       },
     ],
+    station_regNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   {
     timestamps: true,
