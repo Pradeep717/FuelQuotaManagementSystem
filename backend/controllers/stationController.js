@@ -1,36 +1,35 @@
 import FuelStation from "../models/fuelStation.js"; 
 import User from "../models/user.js"; 
-import { protectRoute, authorizeRole } from "../middleware/protectRoute.js"; // Import protectRoute and authorizeRole middleware
+// import { protectRoute, authorizeRole } from "../middleware/protectRoute.js"; // Import protectRoute and authorizeRole middleware
 
 // Signup a new fuel station
 const signupStation = async (req, res) => {
   try {
-    // Ensure the user is authorized and has the role of station_owner
-    const { role } = req;
-    if (role !== "station_owner") {
-      return res.status(403).json({ message: "You are not authorized to sign up a fuel station" });
-    }
+    const { fuelStationOwner, stationName, location, station_regNumber } = req.body;
 
-    const { userId, stationName, location, stationRegistrationNumber } = req.body;
-
-    // Check if user exists
-    const user = await User.findById(userId);
+    // Check if user exists based on fuelStationOwner (the name)
+    const user = await User.findOne({ name: fuelStationOwner });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
 
+    // Ensure the user has the role of station_owner
+    if (user.role !== "station_owner") {
+      return res.status(403).json({ message: "You are not authorized to sign up a fuel station" });
+    }
+
     // Check if station already exists
-    const existingStation = await FuelStation.findOne({ stationRegistrationNumber });
+    const existingStation = await FuelStation.findOne({ station_regNumber });
     if (existingStation) {
       return res.status(400).json({ message: "Station already exists" });
     }
 
     // Create new station
     const newStation = new FuelStation({
-      fuelStationOwner: user._id,  // Set fuelStationOwner to userId
+      fuelStationOwner: user._id,  // Set fuelStationOwner to userId from found user
       stationName,
       location,
-      stationRegistrationNumber,
+      station_regNumber,
     });
 
     await newStation.save();
@@ -40,7 +39,7 @@ const signupStation = async (req, res) => {
       stationName: newStation.stationName,
       stationOwner: newStation.fuelStationOwner,
       location: newStation.location,
-      stationRegistrationNumber: newStation.stationRegistrationNumber,
+      station_regNumber: newStation.station_regNumber,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -48,27 +47,32 @@ const signupStation = async (req, res) => {
   }
 };
 
-// Update a station
+
+
+// Update a station based on station_regNumber
 const updateStation = async (req, res) => {
   try {
-    // Ensure the user is authorized and has the role of station_owner
-    const { role } = req;
-    if (role !== "station_owner") {
-      return res.status(403).json({ message: "You are not authorized to update this station" });
-    }
+    const { stationName, location, station_regNumber } = req.body;
+    const stationRegNumber = req.params.station_regNumber;  // Get station_regNumber from URL parameter
 
-    const { stationName, location, stationRegistrationNumber } = req.body;
-    const stationId = req.params.id;
-
-    let station = await FuelStation.findById(stationId);
+    // Find the station by its registration number
+    let station = await FuelStation.findOne({ station_regNumber: stationRegNumber });
     if (!station) {
       return res.status(404).json({ message: "Station not found" });
+    }
+
+    // Ensure the user is authorized and is the owner of the station
+    const user = req.user;  // User retrieved from protectRoute middleware
+    if (!station.fuelStationOwner.equals(user._id)) {
+      return res.status(403).json({ message: "You are not authorized to update this station" });
     }
 
     // Update station details
     station.stationName = stationName || station.stationName;
     station.location = location || station.location;
-    station.stationRegistrationNumber = stationRegistrationNumber || station.stationRegistrationNumber;
+    station.station_regNumber = station_regNumber || station.station_regNumber;
+
+    // Save updated station
     station = await station.save();
 
     res.status(200).json({
@@ -77,7 +81,7 @@ const updateStation = async (req, res) => {
         stationName: station.stationName,
         stationOwner: station.fuelStationOwner,
         location: station.location,
-        stationRegistrationNumber: station.stationRegistrationNumber,
+        station_regNumber: station.station_regNumber,
       },
       message: "Station updated successfully",
     });
@@ -86,6 +90,9 @@ const updateStation = async (req, res) => {
     console.log("Error in updateStation: ", error.message);
   }
 };
+
+
+
 
 // Get station details by ID
 const getStationById = async (req, res) => {
