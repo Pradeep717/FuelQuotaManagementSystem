@@ -21,10 +21,10 @@ const fuelStationSchema = new mongoose.Schema(
         ref: "Vehicle",
       },
     ],
-    stationRegistrationNumber: {
+    station_regNumber: {
       type: String,
       required: true,
-      unique: true,  // Ensure registration number is unique for each station
+      unique: true,
     },
   },
   {
