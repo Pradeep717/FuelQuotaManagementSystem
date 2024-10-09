@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './db/connectDB.js';
 import userRoutes from './routes/userRoutes.js';
 import vehicleRoutes from './routes/vehicleRoutes.js';
+import fuelTransactionRoutes from './routes/fuelTransactionRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/fuel', fuelTransactionRoutes);
 app.use('/', (req, res) => res.send('API is running...'));
 // app.use('/api/vehicles', vehicleRoutes);
 
