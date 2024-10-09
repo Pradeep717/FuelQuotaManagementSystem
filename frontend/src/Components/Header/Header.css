@@ -1,72 +1,51 @@
-.styled-header {
-    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-    background: linear-gradient(to right, #FF4B2B, #FF416C);
-    width: 100%;
-    padding: 10px 12px 8px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .nav_logo {
-    padding: 0 12px;
-  }
-  
-  .nav-logo-link {
-    text-decoration: none;
-    font-size: 24px;
-    color: #fab005;
-    font-weight: bold;
-  }
-  
-  .menuToggleBtn {
-    display: none;
-    color: white;
-    font-size: 24px;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    cursor: pointer;
-  }
-  
-  .nav-menu {
-    list-style: none;
-    display: flex;
-  }
-  
-  .nav-menu li:hover {
-    cursor: pointer;
-    background: #44a8f4;
-    border-radius: 4px;
-  }
-  
-  .nav-menu-list {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 10px 10px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .styled-header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .menuToggleBtn {
-      display: block;
-    }
-  
-    .nav-menu {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      margin-top: 5px;
-    }
-  
-    .nav-menu.open {
-      display: block;
-    }
-  }
-  
+.header-container {
+  width: 100vw; /* Ensure the container spans the full width */
+  position: relative; /* Position relative to its parent */
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Align everything to the left */
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.navbar-brand img {
+  width: 80px; /* Adjust the size of the image */
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar-brand span {
+  font-size: 26px; /* Increase the font size */
+  font-weight: bold;
+  /* color: #333; Use a solid color for better readability */
+  letter-spacing: 5px; /* Add some letter-spacing for clearer text */
+}
+
+.navbar-info {
+  display: flex;
+  align-items: center;
+  /* margin-left: auto; Push the navbar-info to the far right */
+  padding-right: 20px; /* Adjust right padding */
+}
+
+.navbar-info div {
+  margin-left: 40px;
+  font-size: 20px;
+  color: #333; /* Make sure the text is readable */
+}

@@ -1,11 +1,29 @@
-import React from "react";
 import {Link} from "react-router-dom";   // use to shift tab without refresh 
+import React, { useState, useEffect, useRef } from 'react';
+import brandIcon from '/src/assets/Images/Logo.png';
+import './Header.css';
 
 
 function Header() {
     return(
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-       </nav>
+        <div className="header-container">
+            <nav className="navbar">
+                <div className="navbar-brand">
+                <img src={brandIcon} alt="Brand Icon" />
+                <div className="brand-name">
+                <span>Fuel</span>
+                <span className='highlightedText'>Plus</span>
+                <span>Station</span>
+                </div>
+                </div>
+                <div className="navbar-info">
+                    <div>Home</div>
+                    <div>Orders</div>
+                    <div>Contact</div>
+                    <div>About</div>
+                </div> 
+            </nav>
+        </div>
     )
 }
 export default Header;

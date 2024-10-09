@@ -6,7 +6,7 @@ export const AdminHome = () => {
   return (
     <div>
         <Header/>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }
