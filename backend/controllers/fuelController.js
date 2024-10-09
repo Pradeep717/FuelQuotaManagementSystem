@@ -5,12 +5,12 @@ import FuelStation from "../models/fuelStation.js";
 import mongoose from "mongoose";
 
 // Register a new fuel transaction
-const registerFuelTransaction = async (req, res) => {
+export const registerFuelTransaction = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
-    const { qrCode, fuelStationId, fuelType, litresPumped } = req.body;
+    const { qrCode, fuelStationId, litresPumped } = req.body;
 
     // Find the vehicle by QR code
     const vehicle = await Vehicle.findOne({ qrCode }).session(session);
@@ -20,7 +20,9 @@ const registerFuelTransaction = async (req, res) => {
     }
 
     // Find the fuel quota for the vehicle
-    const fuelQuota = await FuelQuota.findOne({ vehicle: vehicle._id }).session(session);
+    const fuelQuota = await FuelQuota.findOne({ vehicle: vehicle._id }).session(
+      session
+    );
     if (!fuelQuota) {
       res.status(400).json({ message: "Fuel Quota not found" });
       return;
@@ -33,7 +35,9 @@ const registerFuelTransaction = async (req, res) => {
     }
 
     // Find the fuel station
-    const fuelStation = await FuelStation.findById(fuelStationId).session(session);
+    const fuelStation = await FuelStation.findById(fuelStationId).session(
+      session
+    );
     if (!fuelStation) {
       res.status(400).json({ message: "Fuel Station not found" });
       return;
@@ -46,10 +50,11 @@ const registerFuelTransaction = async (req, res) => {
     const newFuelTransaction = new FuelTransaction({
       vehicle: vehicle._id,
       fuelStation: fuelStation._id,
-      fuelType,
+      fuelType: vehicle.fuelType,
       litresPumped,
       quotaBefore,
       quotaAfter,
+      status: "completed",
     });
 
     await newFuelTransaction.save({ session });
@@ -85,8 +90,8 @@ const registerFuelTransaction = async (req, res) => {
   }
 };
 
-// Check fuel quota for a vehicle using qrCode
-const checkFuelTransaction = async (req, res) => {
+// Check fuel quota
+export const checkFuelQuota = async (req, res) => {
   try {
     const { qrCode } = req.body;
 
@@ -102,7 +107,6 @@ const checkFuelTransaction = async (req, res) => {
       return;
     }
 
-    //check if the vehicle has enough quota to pump fuel 
     if (fuelQuota.remainingQuota > 0) {
       res.status(200).json({
         vehicle: vehicle._id,
@@ -114,7 +118,7 @@ const checkFuelTransaction = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in checkFuelQuota: ", error.message);
-  } 
+  }
 };
 
-export default {registerFuelTransaction, checkFuelTransaction};
+export default { registerFuelTransaction, checkFuelQuota };
