@@ -17,8 +17,14 @@ const fuelStationSchema = new mongoose.Schema(
     },
     registeredVehicles: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Vehicle",
+        vehicle: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Vehicle",
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
     station_regNumber: {
