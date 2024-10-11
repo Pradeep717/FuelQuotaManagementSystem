@@ -8,7 +8,7 @@
 
 .navbar {
   display: flex;
-  justify-content: flex-start; /* Align everything to the left */
+  justify-content: space-between; /* Align everything to the left */
   align-items: center;
   padding: 10px 20px;
   position: fixed;
@@ -42,10 +42,16 @@
   align-items: center;
   /* margin-left: auto; Push the navbar-info to the far right */
   padding-right: 20px; /* Adjust right padding */
+  justify-content: space-between;
 }
 
 .navbar-info div {
   margin-left: 40px;
   font-size: 20px;
   color: #333; /* Make sure the text is readable */
+  cursor: pointer;
+}
+
+.logout{
+  color: black;
 }
