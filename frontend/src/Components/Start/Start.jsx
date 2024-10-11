@@ -20,7 +20,9 @@ const Start = () => {
            <Link to="/login">
               <button className="getStartedButton">Log In</button>
            </Link>
-            <button className="howItWorksButton">Sign Up</button>
+           <Link to="/signup">
+              <button className="howItWorksButton">Sign Up</button>
+            </Link>
           </div>
           <div className='social-start'>
               <img src="https://img.icons8.com/?size=100&id=118498&format=png&color=000000" alt="Facebook" style={{ width: '40px', height: '40px' }} />
