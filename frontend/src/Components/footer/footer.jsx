@@ -1,25 +1,21 @@
 import React from "react";
 import "./footer.css";
+import brandIcon from '/src/assets/Images/Logo.png';
 
 function Footer() {
   return (
     <div class="main-footer">
       <div className="footercontainer">
         <div className="row">
-          <hr />
+          {/* <hr /> */}
           {/*column1*/}
           <div className="col">
-            <p className="tit" style={{color:"white"}}>
-              {/* <u> */}
-              Fuel Plus Station
-                {/* <h1 className="title">
-            Fuel<span className='highlightedText'>Plus</span> Station!
-          </h1> */}
-                {/* </u> */}
-            </p>
-            <p>
-             
-            </p>
+          <img className="brand-logo" src={brandIcon} alt="Brand Icon" />
+          <div className="fname">
+                <span>Fuel</span>
+                <span className='highlightedText'>Plus</span>
+                <span>Station</span>
+                </div>
           </div>
           {/*column2*/}
           <div className="col">
@@ -36,10 +32,10 @@ function Footer() {
             <p className="footer-p">Matara</p>
             <p className="footer-p">Rathnapura</p>
           </div>
-          <div className="col">
+          {/* <div className="col">
             <h3>Fuel Plus Solution</h3>
             
-          </div>
+          </div> */}
         </div>
         <hr />
         <div className="row">
