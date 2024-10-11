@@ -22,6 +22,7 @@ function Header() {
                     <div>Contact</div>
                     <div>About</div>
                 </div> 
+                
             </nav>
         </div>
     )
