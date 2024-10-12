@@ -25,8 +25,9 @@ const SignUp = () => {
             <input type="text" placeholder="Name" required />
             <input type="email" placeholder="Email" required />
             <input type="password" placeholder="Password" required />
+            <input type="phoneNumber" placeholder="Phone Number" required />
             <div className="role">
-              <label htmlFor="Role">Choose a role:</label>
+              <label htmlFor="Role">Choose a role: </label>
               <select name="Role" id="Role">
                 <option value="Vehicle">Vehicle</option>
                 <option value="Station">Station</option>
