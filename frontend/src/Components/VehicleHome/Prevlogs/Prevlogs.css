@@ -29,21 +29,5 @@
   .logs-table tr:hover {
     background-color: #ddd;
   }
-  
-  .show-details {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
-  .delete {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
+
   
