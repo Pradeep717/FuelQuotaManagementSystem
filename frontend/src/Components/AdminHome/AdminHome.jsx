@@ -52,7 +52,6 @@ export const AdminHome = () => {
     },
   };
 
-  // Sample data for Vehicles and Stations
   const vehiclesData = [
     { id: 'V001', name: 'Vehicle A' },
     { id: 'V002', name: 'Vehicle B' },

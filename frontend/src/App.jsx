@@ -9,6 +9,10 @@ import Login from './Components/Login/Login'
 import SignUp from './Components/SignUp/SignUp';
 import { AdminHome } from './Components/AdminHome/AdminHome';
 import VehicleHome from './Components/VehicleHome/vehicleHome';
+import VehicleRegister from './Components/VehicleHome/VehicleRegister/VehicleRegister';
+import FuelQuota from './Components/VehicleHome/FuelQuota/FuelQuota';
+import Prevlogs from './Components/VehicleHome/Prevlogs/Prevlogs';
+
 function App() {
   return (
     <Router>
@@ -18,6 +22,9 @@ function App() {
       <Route path='/signup' element={<SignUp />} />
       <Route path='/admin' element={<AdminHome />} />
       <Route path='/vehicleHome' element={<VehicleHome />} />
+      <Route path='/v-register' element={<VehicleRegister />} />
+      <Route path='/fuel-quota' element={<FuelQuota/>}/>
+      <Route path='/prev-logs' element={<Prevlogs/>}/>
     </Routes>
   </Router>
   )
