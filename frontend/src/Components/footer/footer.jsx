@@ -24,6 +24,12 @@ function Footer() {
               Address - Fuel Plus Station, Galle, Sri Lanka.
             </p>
             <p className="footer-p">Telephone - 077-5 585 812</p>
+            <div className='social-start'>
+              <img src="https://img.icons8.com/?size=100&id=118498&format=png&color=000000" alt="Facebook" style={{ width: '40px', height: '40px' }} />
+              <img src="https://img.icons8.com/?size=100&id=3lrBZiVC31vI&format=png&color=000000" alt="Instagram" style={{ width: '45px', height: '45px' }} />
+              <img src="https://img.icons8.com/?size=100&id=qbiAUnUMOnLp&format=png&color=000000" alt="Email" style={{ width: '40px', height: '40px' }} />
+              <img src="https://img.icons8.com/?size=100&id=42961&format=png&color=000000" alt="Whatsapp" style={{ width: '40px', height: '40px' }} />
+          </div>
           </div>
           {/*column3*/}
           <div className="col">
