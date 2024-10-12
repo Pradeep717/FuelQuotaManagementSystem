@@ -30,7 +30,7 @@ const chartOptions = {
 
 const FuelQuota = () => {
   const barcodeRef = useRef(null);
-  const [fuelQuota, setFuelQuota] = useState(35); // State to track the circular progress value
+  const [fuelQuota, setFuelQuota] = useState(20); // State to track the circular progress value
 
   useEffect(() => {
     // Generate the barcode when the component mounts
