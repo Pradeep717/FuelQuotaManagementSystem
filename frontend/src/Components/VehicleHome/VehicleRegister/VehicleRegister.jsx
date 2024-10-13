@@ -47,6 +47,13 @@ const VehicleRegister = () => {
             </div>
           </div>
 
+          <div className="form-group">
+            <label>Vehicle Number</label>
+            <div className="half-input">
+              <input type="text" placeholder="Vehicle Number" />
+            </div>
+          </div>
+
 
           <button className="button" type="submit">Register</button>
         </form>
