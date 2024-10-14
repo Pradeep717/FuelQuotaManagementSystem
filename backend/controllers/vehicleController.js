@@ -1,12 +1,20 @@
 import Vehicle from "../models/vehicle.js";
+import VehicleRegistry from "../models/vehicleRegistry.js";
 import User from "../models/user.js";
 import generateQrCode from "../utils/helpers/generateQrCode.js";
-
+import FuelQuota from "../models/fuelQuota.js";
 // Register a new
 const registerVehicle = async (req, res) => {
   try {
-    const { vehicleNumber, vehicleType, fuelType } = req.body;
+    const { vehicleNumber } = req.body;
     const vehicleOwner = req.user._id;
+
+    const role = await User.findById(vehicleOwner).select("role");
+
+    if (role.role !== "vehicle_owner") {
+      res.status(400).json({ message: "Unauthorized" });
+      return;
+    }
 
     const vehicle = await Vehicle.findOne({ vehicleNumber });
     if (vehicle) {
@@ -14,9 +22,15 @@ const registerVehicle = async (req, res) => {
       return;
     }
 
-    //isVerified: set true unil logic is implemented later 
-    const isVerified = true;
+    //verfiy vehicle from vehicle registry
+    const vehicleRegistry = await VehicleRegistry.findOne({ License_Plate: vehicleNumber });
+    if (!vehicleRegistry) {
+      res.status(400).json({ message: "Vehicle is not registered in the vehicle registry" });
+      return;
+    }
 
+    const { Vehicle_Type: vehicleType, Fuel_Type: fuelType, Verified: isVerified } = vehicleRegistry;
+    
     const qrCOdeDate = `${vehicleNumber}-${vehicleType}-${fuelType}`;
     const qrCode = await generateQrCode(qrCOdeDate);
 
@@ -31,7 +45,26 @@ const registerVehicle = async (req, res) => {
 
     await newVehicle.save();
 
-    if (newVehicle) {
+    // Create fuel quota for the vehicle based on type of vehicle , car 20, bike 10, truck 100, bus 100
+    let allocatedQuota = 0;
+    if (vehicleType === "car") {
+      allocatedQuota = 20;
+    } else if (vehicleType === "bike") {
+      allocatedQuota = 10;
+    } else if (vehicleType === "truck" || vehicleType === "bus") {
+      allocatedQuota = 100;
+    }
+
+    const fuelQuota = new FuelQuota({
+      vehicle: newVehicle._id,
+      weekStartDate: new Date(),
+      allocatedQuota,
+      remainingQuota: allocatedQuota,
+    });
+
+    await fuelQuota.save();
+
+    if (newVehicle && fuelQuota) {
       res.status(201).json({
         _id: newVehicle._id,
         vehicleOwner: newVehicle.vehicleOwner,

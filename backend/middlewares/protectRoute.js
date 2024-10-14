@@ -42,4 +42,23 @@ const authorizeRole = async (req, res, next) => {
   }
 }
 
-export { protectRoute, authorizeRole };
+// admin role is required to access this route
+const authorizeAdmin = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if(!user || user.role !== "admin"){
+      return res.status(401).json({ message: "You are not authorized to access this route" });
+    }
+
+    req.role = user.role;
+
+    next();
+    
+  } catch (error) {
+    res.status(401).json({ message: "You are not authorized to access this route" });
+    console.log("Error in authorizeAdmin: ", error.message
+    );
+  }
+}
+
+export { protectRoute, authorizeRole, authorizeAdmin };
