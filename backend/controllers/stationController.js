@@ -1,29 +1,24 @@
 import FuelStation from "../models/fuelStation.js"; 
 import User from "../models/user.js"; 
+import StationOperator from "../models/stationOperator.js";
+
 // import { protectRoute, authorizeRole } from "../middleware/protectRoute.js"; // Import protectRoute and authorizeRole middleware
 
 // Signup a new fuel station
-const signupStation = async (req, res) => {
+const registerStation = async (req, res) => {
   try {
-    const { fuelStationOwner, stationName, location, station_regNumber } = req.body;
+    const {stationName, location, station_regNumber } = req.body;
 
-    // Check if user exists based on fuelStationOwner (the name)
-    const user = await User.findOne({ name: fuelStationOwner });
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    // Ensure the user has the role of station_owner
+    const user = req.user;  // User retrieved from protectRoute middleware
     if (user.role !== "station_owner") {
-      return res.status(403).json({ message: "You are not authorized to sign up a fuel station" });
+        return res.status(403).json({ message: "You are not authorized to sign up a fuel station" });
     }
 
-    // Check if station already exists
     const existingStation = await FuelStation.findOne({ station_regNumber });
     if (existingStation) {
-      return res.status(400).json({ message: "Station already exists" });
+        return res.status(400).json({ message: "Station already exists" });
     }
-
+    
     // Create new station
     const newStation = new FuelStation({
       fuelStationOwner: user._id,  // Set fuelStationOwner to userId from found user
@@ -43,11 +38,9 @@ const signupStation = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
-    console.log("Error in signupStation: ", error.message);
+    console.log("Error in registerStation: ", error.message);
   }
 };
-
-
 
 // Update a station based on station_regNumber
 const updateStation = async (req, res) => {
@@ -91,9 +84,6 @@ const updateStation = async (req, res) => {
   }
 };
 
-
-
-
 // Get station details by ID
 const getStationById = async (req, res) => {
   const stationId = req.params.id;
@@ -122,4 +112,40 @@ const getAllStations = async (req, res) => {
   }
 };
 
-export { signupStation, updateStation, getStationById, getAllStations };
+const addStationOperator = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+
+    const user = req.user;
+    if (user.role !== "station_owner") {
+      return res.status(403).json({ message: "You are not authorized to add a station operator" });
+    }
+
+    const station = await FuelStation.findOne({ fuelStationOwner: user._id });
+    if (!station) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    const newStationOperator = new StationOperator({
+        name,
+        email,
+        stationId: station._id,
+        });
+
+    await newStationOperator.save();
+
+    res.status(201).json({
+      _id: newStationOperator._id,
+      name: newStationOperator.name,
+      email: newStationOperator.email,
+      stationId: newStationOperator.stationId,
+    });
+    }
+    catch (error) {
+      res.status(500).json({ message: error.message });
+      console.log("Error in addStationOperator: ", error.message);
+    }
+}
+
+
+export { registerStation, updateStation, getStationById, getAllStations, addStationOperator }; // Export the functions
