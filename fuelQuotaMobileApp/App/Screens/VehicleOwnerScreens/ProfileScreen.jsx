@@ -1,10 +1,14 @@
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import React from 'react';
+import { useUser } from '../../../context/UserContext';
 
 const ProfileScreen = () => {
+  const { logoutUser } = useUser();
+
   return (
-    <View>
-      <Text>ProfileScreen</Text>
+    <View className="flex-1 justify-center items-center bg-black p-10">
+      <Text className="text-2xl font-bold mb-4 text-white">Vehicle Owner Profile Screen</Text>
+      <Button title="Logout" onPress={logoutUser} />
     </View>
   );
 };

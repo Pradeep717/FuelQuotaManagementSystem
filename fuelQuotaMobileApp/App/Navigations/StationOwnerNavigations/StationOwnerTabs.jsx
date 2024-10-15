@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 const StationOwnerTabs = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name="Home"
+      name="sHome"
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
@@ -18,7 +18,7 @@ const StationOwnerTabs = () => (
       }}
     />
     <Tab.Screen
-      name="Profile"
+      name="sProfile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',

@@ -2,15 +2,15 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import HomeScreen from '../../Screens/VehicleOwnerScreens/HomeScreen';
-import ProfileScreen from '../../Screens/VehicleOwnerScreens/ProfileScreen';
+import HomeScreen from '../../Screens/AdminScreens/HomeScreen';
+import ProfileScreen from '../../Screens/AdminScreens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-const VehicleOwnerTabs = () => (
+const AdminTabs = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name="Home"
+      name="aHome"
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
@@ -18,7 +18,7 @@ const VehicleOwnerTabs = () => (
       }}
     />
     <Tab.Screen
-      name="Profile"
+      name="aProfile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
@@ -28,4 +28,4 @@ const VehicleOwnerTabs = () => (
   </Tab.Navigator>
 );
 
-export default VehicleOwnerTabs;
+export default AdminTabs;
