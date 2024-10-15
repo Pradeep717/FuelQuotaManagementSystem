@@ -43,7 +43,7 @@ const VehiclesScreen = () => {
     if (!selectedVehicle) return;
 
     try {
-      await axios.delete(`${API_URL}/api/vehicles/${selectedVehicle.id}`);
+      await axios.delete(`${API_URL}/api/vehicles/${selectedVehicle._id}`);
       Alert.alert('Success', 'Vehicle deleted successfully');
       setModalVisible(false);
       fetchVehicles();
