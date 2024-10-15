@@ -84,9 +84,8 @@ const logoutUser = async (req, res) => {
 
 //Update a user
 const updateUser = async (req, res) => {
-  const { name, email, password, phoneNumber } = req.body;
+  const { name, email, phoneNumber } = req.body;
   const userId = req.user._id;
-  console.log("userId: ", userId);
   try {
     let user = await User.findById(userId);
     if (!user) {
@@ -99,12 +98,6 @@ const updateUser = async (req, res) => {
       return;
     }
 
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      user.password = hashedPassword;
-    }
-
     user.name = name || user.name;
     user.email = email || user.email;
     user.phoneNumber = phoneNumber || user.phoneNumber;
@@ -115,7 +108,6 @@ const updateUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
         phoneNumber: user.phoneNumber,
       },
       message: "User updated successfully",
