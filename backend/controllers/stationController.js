@@ -104,7 +104,9 @@ const getStationById = async (req, res) => {
 // Get all stations
 const getAllStations = async (req, res) => {
   try {
-    const stations = await FuelStation.find();
+    const stations = await FuelStation.find({})
+      .populate("fuelStationOwner", "name email")
+      .populate(`registeredVehicles.vehicle`, "vehicleNumber vehicleType");
     res.status(200).json(stations);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -147,5 +149,54 @@ const addStationOperator = async (req, res) => {
     }
 }
 
+// delete a station operator
+const deleteStationOperator = async (req, res) => {
+  try {
+    const stationOperatorId = req.params.id;
+    const user = req.user;
 
-export { registerStation, updateStation, getStationById, getAllStations, addStationOperator }; // Export the functions
+    const stationOperator = await StationOperator.findById(stationOperatorId);
+    if (!stationOperator) {
+      return res.status(404).json({ message: "Station operator not found" });
+    }
+
+    const station = await FuelStation.findById(stationOperator.stationId);
+    if (!station) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    if (!station.fuelStationOwner.equals(user._id)) {
+      return res.status(403).json({ message: "You are not authorized to delete this station operator" });
+    }
+
+    await stationOperator.remove();
+    res.status(200).json({ message: "Station operator removed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in deleteStationOperator: ", error.message);
+  }
+};
+
+// delete a station
+const deleteStation = async (req, res) => {
+  try {
+    const stationId = req.params.id;
+    const user = req.user;
+
+    const station = await FuelStation.findById(stationId);
+    if (!station) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    await station.remove();
+    res.status(200).json({ message: "Station removed" });
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in deleteStation: ", error.message);
+  }
+}
+
+
+
+export { registerStation, updateStation, getStationById, getAllStations, addStationOperator, deleteStationOperator, deleteStation }; // Export the functions

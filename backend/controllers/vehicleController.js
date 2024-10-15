@@ -23,14 +23,22 @@ const registerVehicle = async (req, res) => {
     }
 
     //verfiy vehicle from vehicle registry
-    const vehicleRegistry = await VehicleRegistry.findOne({ License_Plate: vehicleNumber });
+    const vehicleRegistry = await VehicleRegistry.findOne({
+      License_Plate: vehicleNumber,
+    });
     if (!vehicleRegistry) {
-      res.status(400).json({ message: "Vehicle is not registered in the vehicle registry" });
+      res
+        .status(400)
+        .json({ message: "Vehicle is not registered in the vehicle registry" });
       return;
     }
 
-    const { Vehicle_Type: vehicleType, Fuel_Type: fuelType, Verified: isVerified } = vehicleRegistry;
-    
+    const {
+      Vehicle_Type: vehicleType,
+      Fuel_Type: fuelType,
+      Verified: isVerified,
+    } = vehicleRegistry;
+
     const qrCOdeDate = `${vehicleNumber}-${vehicleType}-${fuelType}`;
     const qrCode = await generateQrCode(qrCOdeDate);
 
@@ -86,8 +94,24 @@ const registerVehicle = async (req, res) => {
 // Get all vehicles
 const getAllVehicles = async (req, res) => {
   try {
-    const vehicles = await Vehicle.find({}).select("-updatedAt").select("-qrCode");
-    res.status(200).json(vehicles);
+    const vehicles = await Vehicle.find({})
+      .select("-updatedAt -qrCode")
+      .populate("vehicleOwner", "name");
+
+    // Transform the response to include vehicleOwnerName
+    const transformedVehicles = vehicles.map(vehicle => ({
+      _id: vehicle._id,
+      vehicleOwner: vehicle.vehicleOwner._id,
+      vehicleOwnerName: vehicle.vehicleOwner.name,
+      vehicleNumber: vehicle.vehicleNumber,
+      vehicleType: vehicle.vehicleType,
+      fuelType: vehicle.fuelType,
+      isVerified: vehicle.isVerified,
+      createdAt: vehicle.createdAt,
+      __v: vehicle.__v
+    }));
+
+    res.status(200).json(transformedVehicles);
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in getVehicles: ", error.message);
@@ -105,4 +129,20 @@ const getVehicleById = async (req, res) => {
   }
 };
 
-export { registerVehicle, getAllVehicles, getVehicleById };
+// Delete vehicle by id
+const deleteVehicle = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findById(req.params.id);
+    if (!vehicle) {
+      return res.status(404).json({ message: "Vehicle not found" });
+    }
+
+    await vehicle.remove();
+    res.status(200).json({ message: "Vehicle removed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in deleteVehicle: ", error.message);
+  }
+};
+
+export { registerVehicle, getAllVehicles, getVehicleById, deleteVehicle };

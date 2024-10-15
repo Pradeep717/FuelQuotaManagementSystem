@@ -3,6 +3,7 @@ import {
   getAllVehicles,
   getVehicleById,
   registerVehicle,
+  deleteVehicle,
 } from "../controllers/vehicleController.js";
 import { addVehicleRegistry } from "../controllers/vehicleRegistryController.js";
 import { protectRoute, authorizeAdmin } from "../middlewares/protectRoute.js";
@@ -12,6 +13,7 @@ router.get("/", protectRoute, getAllVehicles);
 router.get("/:id", protectRoute, getVehicleById);
 router.post("/register", protectRoute, registerVehicle);
 router.post("/registry", protectRoute, authorizeAdmin, addVehicleRegistry);
+router.delete("/:id", protectRoute, deleteVehicle);
 
 
 export default router;
