@@ -8,7 +8,11 @@ import ProfileScreen from '../../Screens/AdminScreens/ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const AdminTabs = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
     <Tab.Screen
       name="aHome"
       component={HomeScreen}

@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
     try {
-      const response = await axios.post('http://192.168.1.31:5000/api/users/login', { email, password });
+      const response = await axios.post('http://172.20.10.2:5000/api/users/login', { email, password });
       const userData = response.data;
 
       // Store user data in AsyncStorage for persistence
@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
 
   const signupUser = async (name, email, password, role, phoneNumber) => {
     try {
-      await axios.post('http://192.168.1.31:5000/api/users/signup', { name, email, password, role, phoneNumber });
+      await axios.post('http://172.20.10.2:5000/api/users/signup', { name, email, password, role, phoneNumber });
       loginUser(email, password); // Automatically log the user in after signup
     } catch (error) {
       console.error('Signup error:', error);

@@ -8,7 +8,11 @@ import ProfileScreen from '../../Screens/VehicleOwnerScreens/ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const VehicleOwnerTabs = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
     <Tab.Screen
       name="vHome"
       component={HomeScreen}

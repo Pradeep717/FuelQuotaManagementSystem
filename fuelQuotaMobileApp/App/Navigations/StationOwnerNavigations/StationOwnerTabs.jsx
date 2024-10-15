@@ -8,7 +8,11 @@ import ProfileScreen from '../../Screens/StationOwnerScreens/ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const StationOwnerTabs = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
     <Tab.Screen
       name="sHome"
       component={HomeScreen}
