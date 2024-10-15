@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '@env';
 
 // import AdminTabs from '../App/Navigations/AdminNavigations/AdminTabs';
 // import VehicleOwnerTabs from '../App/Navigations/VehicleOwnerNavigations/VehicleOwnerTabs';
@@ -31,7 +32,7 @@ export const UserProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
     try {
-      const response = await axios.post('http://172.20.10.2:5000/api/users/login', { email, password });
+      const response = await axios.post('${API_URL}/api/users/login', { email, password });
       const userData = response.data;
 
       // Store user data in AsyncStorage for persistence
@@ -45,7 +46,7 @@ export const UserProvider = ({ children }) => {
 
   const signupUser = async (name, email, password, role, phoneNumber) => {
     try {
-      await axios.post('http://172.20.10.2:5000/api/users/signup', { name, email, password, role, phoneNumber });
+      await axios.post('${API_URL}/api/users/signup', { name, email, password, role, phoneNumber });
       loginUser(email, password); // Automatically log the user in after signup
     } catch (error) {
       console.error('Signup error:', error);
