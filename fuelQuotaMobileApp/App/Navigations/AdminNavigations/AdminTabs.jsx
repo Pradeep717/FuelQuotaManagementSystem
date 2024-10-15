@@ -1,9 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-import HomeScreen from '../../Screens/AdminScreens/HomeScreen';
+import VehiclesScreen from '../../Screens/AdminScreens/VehiclesScreen';
 import ProfileScreen from '../../Screens/AdminScreens/ProfileScreen';
+import StationScreen from '../../Screens/AdminScreens/StationScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,15 +17,23 @@ const AdminTabs = () => (
     }}
   >
     <Tab.Screen
-      name="aHome"
-      component={HomeScreen}
+      name="vehicles"
+      component={VehiclesScreen}
       options={{
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ color, size }) => <FontAwesome name="home" size={size} color={color} />,
+        tabBarLabel: 'Vehicles',
+        tabBarIcon: ({ color, size }) => <FontAwesome5 name="car" size={24} color={color} />,
       }}
     />
     <Tab.Screen
-      name="aProfile"
+      name="stations"
+      component={StationScreen}
+      options={{
+        tabBarLabel: 'Stations',
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="fuel" size={24} color={color} />,
+      }}
+    />
+    <Tab.Screen
+      name="profile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
