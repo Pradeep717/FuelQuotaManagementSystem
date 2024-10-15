@@ -13,6 +13,7 @@ import VehicleRegister from './Components/VehicleHome/VehicleRegister/VehicleReg
 import FuelQuota from './Components/VehicleHome/FuelQuota/FuelQuota';
 import Prevlogs from './Components/VehicleHome/Prevlogs/Prevlogs';
 import StationHome from './Components/StationHome/StationHome';
+import ScanQR from './Components/StationHome/ScanQR/ScanQR';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path='/fuel-quota' element={<FuelQuota/>}/>
       <Route path='/prev-logs' element={<Prevlogs/>}/>
       <Route path='/s-home' element={<StationHome/>}/>
+      <Route path='/scan-qr' element={<ScanQR/>}/>
     </Routes>
   </Router>
   )

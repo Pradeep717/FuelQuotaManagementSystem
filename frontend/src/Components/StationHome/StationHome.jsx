@@ -11,7 +11,7 @@ const StationHome = () => {
     <div>
         <Header/>
         <div className="v-home">
-        <Link to="/v-register">
+        <Link to="/s-register">
         <div className="register card">
             <div className="card-content">
             <h1>Register First</h1>
@@ -19,7 +19,7 @@ const StationHome = () => {
         </div>
         </Link>
 
-        <Link to="/fuel-quota">
+        <Link to="/s-fuel-quota">
         <div className="fuel-quota card">
             <div className="card-content">
             <h1>Fuel Quota</h1>
@@ -27,10 +27,18 @@ const StationHome = () => {
         </div>
         </Link>
 
-        <Link to="/prev-logs">
+        <Link to="/s-prev-logs">
         <div className="logs card">
             <div className="card-content">
             <h1>Previous Logs</h1>
+            </div>
+        </div>
+        </Link>
+
+        <Link to="/scan-qr">
+        <div className="qr-scan card">
+            <div className="card-content">
+            <h1>Scan QR</h1>
             </div>
         </div>
         </Link>
