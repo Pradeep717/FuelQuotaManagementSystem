@@ -42,16 +42,21 @@ const StationScreen = () => {
   const handleDeleteStation = async () => {
     if (!selectedStation) return;
 
-    // code this with delete route of station
-    // try {
-    //   await axios.delete(`${API_URL}/api/stations/${selectedStation.id}`);
-    //   Alert.alert('Success', 'Station deleted successfully');
-    //   setModalVisible(false);
-    //   fetchStations();
-    // } catch (error) {
-    //   console.error('Error deleting station:', error);
-    //   Alert.alert('Error', 'Failed to delete the station');
-    // }
+    try {
+      await axios.delete(`${API_URL}/api/stations/deleteStation/${selectedStation.id}`);
+      Alert.alert('Success', 'Station deleted successfully');
+      setModalVisible(false);
+      setSelectedStation(null);
+      fetchStations();
+    } catch (error) {
+      console.error('Error deleting station:', error);
+      Alert.alert('Error', 'Failed to delete the station');
+    }
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedStation(null);
   };
 
   return (
@@ -74,27 +79,34 @@ const StationScreen = () => {
           <View className="bg-white p-8 rounded-lg w-8/12 max-h-3/4">
             {selectedStation && (
               <>
-                <Text className="text-3xl font-semibold mb-4"> {selectedStation.stationName}</Text>
+                <Text className="text-3xl font-semibold mb-4">{selectedStation.stationName}</Text>
                 <Text>Location: {selectedStation.location}</Text>
                 <Text>Station_regNumber: {selectedStation.station_regNumber}</Text>
-                <Text>Station Owner: {selectedStation.fuelStationOwner}</Text>
+                <Text>Station Owner: {selectedStation.fuelStationOwner.name}</Text>
 
-                <Text className="font-bold mt-4">Registered Vehicles:</Text>
-                <FlatList
-                  data={selectedStation.registeredVehicles}
-                  keyExtractor={(item) => item._id}
-                  renderItem={({ item }) => (
-                    <View className="border-b border-gray-300 py-2">
-                      <Text>Vehicle ID: {item.vehicle}</Text>
-                      <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
-                    </View>
-                  )}
-                  style={{ maxHeight: 200 }}
-                />
+                {selectedStation.registeredVehicles && selectedStation.registeredVehicles.length > 0 ? (
+                  <>
+                    <Text className="font-bold mt-4">Registered Vehicles:</Text>
+                    <FlatList
+                      data={selectedStation.registeredVehicles}
+                      keyExtractor={(item) => item._id.toString()}
+                      renderItem={({ item }) => (
+                        <View className="border-b border-gray-300 py-2">
+                          <Text>Vehicle ID: {item.vehicle.vehicleNumber}</Text>
+                          <Text>Vehicle: {item.vehicle.vehicleType}</Text>
+                          <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
+                        </View>
+                      )}
+                      style={{ maxHeight: 200 }}
+                    />
+                  </>
+                ) : (
+                  <Text className="mt-4">No registered vehicles </Text>
+                )}
 
                 <View className="flex-row justify-between mt-4">
                   <Button title="Delete" onPress={handleDeleteStation} color="red" />
-                  <Button title="Close" onPress={() => setModalVisible(false)} />
+                  <Button title="Close" onPress={closeModal} />
                 </View>
               </>
             )}
