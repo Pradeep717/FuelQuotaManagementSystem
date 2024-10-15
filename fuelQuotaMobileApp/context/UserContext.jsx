@@ -62,22 +62,22 @@ export const UserProvider = ({ children }) => {
     // });
   };
 
-  const navigateToRoleBasedScreen = (role) => {
-    // if (role === 'vehicle_owner') {
-    //   navigation.navigate('VehicleOwnerTabs');
-    // } else if (role === 'station_owner') {
-    //   navigation.navigate('StationOwnerTabs');
-    // } else if (role === 'admin') {
-    //   navigation.navigate('AdminTabs');
-    // }
-    // if (role === 'vehicle_owner') {
-    //   navigation.navigate(VehicleOwnerTabs);
-    // } else if (role === 'station_owner') {
-    //   navigation.navigate(StationOwnerTabs);
-    // } else if (role === 'admin') {
-    //   navigation.navigate(AdminTabs);
-    // }
-  };
+  // const navigateToRoleBasedScreen = (role) => {
+  // if (role === 'vehicle_owner') {
+  //   navigation.navigate('VehicleOwnerTabs');
+  // } else if (role === 'station_owner') {
+  //   navigation.navigate('StationOwnerTabs');
+  // } else if (role === 'admin') {
+  //   navigation.navigate('AdminTabs');
+  // }
+  // if (role === 'vehicle_owner') {
+  //   navigation.navigate(VehicleOwnerTabs);
+  // } else if (role === 'station_owner') {
+  //   navigation.navigate(StationOwnerTabs);
+  // } else if (role === 'admin') {
+  //   navigation.navigate(AdminTabs);
+  // }
+  // };
 
   return <UserContext.Provider value={{ user, loginUser, signupUser, logoutUser }}>{children}</UserContext.Provider>;
 };
