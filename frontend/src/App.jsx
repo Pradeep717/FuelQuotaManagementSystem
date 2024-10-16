@@ -18,6 +18,7 @@ import QRScan from './Components/StationHome/QRScan/QRScan';
 import Operator from './Components/Operator/Operator';
 import StationQuota from './Components/StationHome/StationQuota/StationQuota';
 import StationLogs from './Components/StationHome/StationLogs/StationLogs';
+import StationRegister from './Components/StationHome/StationRegister/StationRegister';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route path='/o-home' element={<Operator/>}/>
       <Route path='/s-fuel-quota' element={<StationQuota/>}/>
       <Route path='/s-prev-logs' element={<StationLogs/>}/>
+      <Route path='/s-register' element={<StationRegister/>}/>
     </Routes>
   </Router>
   )
