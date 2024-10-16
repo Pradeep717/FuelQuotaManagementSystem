@@ -6,10 +6,13 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from 'react-router-dom';
 
+
+
 const StationHome = () => {
   return (
     <div>
         <Header/>
+        <h1 className='station-name'>Station Name</h1>
         <div className="v-home">
         <Link to="/s-register">
         <div className="register card">
@@ -39,6 +42,14 @@ const StationHome = () => {
         <div className="qr-scan card">
             <div className="card-content">
             <h1>Scan QR</h1>
+            </div>
+        </div>
+        </Link>
+
+        <Link to="/create-operator">
+        <div className="create-opera card">
+            <div className="card-content">
+            <h1>Create an operator</h1>
             </div>
         </div>
         </Link>
