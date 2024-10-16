@@ -35,7 +35,6 @@ export const UserProvider = ({ children }) => {
       const response = await axios.post(`${API_URL}/api/users/login`, { email, password });
       const userData = response.data;
 
-      // Store user data in AsyncStorage for persistence
       await AsyncStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       // navigateToRoleBasedScreen(userData.role);
@@ -47,7 +46,7 @@ export const UserProvider = ({ children }) => {
   const signupUser = async (name, email, password, role, phoneNumber) => {
     try {
       await axios.post(`${API_URL}/api/users/signup`, { name, email, password, role, phoneNumber });
-      loginUser(email, password); // Automatically log the user in after signup
+      loginUser(email, password);
     } catch (error) {
       console.error('Signup error:', error);
     }
