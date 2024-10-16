@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../../Header/Header';
 import Footer from '../../footer/footer';
-import './VehicleRegister.css'; // You will need custom CSS for styling
+import './VehicleRegister.css';
 
 const VehicleRegister = () => {
   const [isExistingCustomer, setIsExistingCustomer] = useState(null);
