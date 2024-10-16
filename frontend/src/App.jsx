@@ -14,7 +14,7 @@ import FuelQuota from './Components/VehicleHome/FuelQuota/FuelQuota';
 import Prevlogs from './Components/VehicleHome/Prevlogs/Prevlogs';
 import StationHome from './Components/StationHome/StationHome';
 import CreateOperator from './Components/StationHome/CreateOperator/CreateOperator';
-// import ScanQR from './Components/StationHome/ScanQR/ScanQR';
+import QRScan from './Components/StationHome/QRScan/QRScan';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
       <Route path='/prev-logs' element={<Prevlogs/>}/>
       <Route path='/s-home' element={<StationHome/>}/>
       <Route path='/create-operator' element={<CreateOperator/>}/>
-      {/* <Route path='/scan-qr' element={<ScanQR/>}/> */}
+      <Route path='/scan-qr' element={<QRScan/>}/>
     </Routes>
   </Router>
   )
