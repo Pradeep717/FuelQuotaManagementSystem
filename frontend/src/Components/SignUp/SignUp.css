@@ -67,6 +67,18 @@ input {
   width: 100%;
   border-radius: 5px;
 }
+.role {
+  background-color: #f6f5f7;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+}
+
+
 
 button {
   background-color: #ff4b2b;
@@ -95,4 +107,10 @@ button:hover {
 
 .ghost:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+#Role{
+  background-color: #f6f5f7;
+  border: none;
+  color: rgb(112, 96, 96);
 }

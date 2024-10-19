@@ -19,9 +19,13 @@ function Header() {
                 <div className="navbar-info">
                     <div>Home</div>
                     <div>Orders</div>
-                    <div>Contact</div>
+                    <div>Profile</div>
                     <div>About</div>
                 </div> 
+                <div className="logout">
+                    <button className="button">Logout</button>
+                </div>
+                
             </nav>
         </div>
     )
