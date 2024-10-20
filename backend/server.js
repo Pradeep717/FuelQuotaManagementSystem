@@ -8,6 +8,9 @@ import stationRoutes from './routes/stationRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
+import cron from 'node-cron';
+import FuelQuota from './models/fuelQuota.js'
+
 dotenv.config();
 
 connectDB();
@@ -29,5 +32,24 @@ app.use('/api/fuel', fuelTransactionRoutes);
 app.use("/api/stations", stationRoutes);  // Ensure stations route is registered under "/api/stations"
 app.use('/', (req, res) => res.send('API is running...'));
 // app.use('/api/vehicles', vehicleRoutes);
+
+// CRON job to reset remaining quota at midnight every Sunday
+cron.schedule('0 0 * * 0', async () => {
+    try {
+      // Find all fuel quotas
+      const fuelQuotas = await FuelQuota.find({});
+      
+      // Update each quota
+      for (let quota of fuelQuotas) {
+        quota.remainingQuota = quota.allocatedQuota;
+        await quota.save();
+      }
+      
+      console.log('Fuel quotas reset to allocatedQuota successfully');
+    } catch (error) {
+      console.error('Error in resetting fuel quotas: ', error.message);
+    }
+  });
+  
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
