@@ -18,7 +18,8 @@ const HomeScreen = () => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setScannedData(data);
-    Alert.alert('Scanned QR Code', `Type: ${type}\nData: ${data}`, [{ text: 'OK', onPress: () => setScanned(false) }]);
+    // Alert.alert('Scanned QR Code', `Type: ${type}\nData: ${data}`, [{ text: 'OK', onPress: () => setScanned(false) }]);
+    Alert.alert('Scanned QR Code', `Type: ${type}\nData: ${data}`, [{ text: 'OK' }]);
   };
 
   if (hasPermission === null) {
@@ -46,7 +47,14 @@ const HomeScreen = () => {
         </View>
       )}
 
-      {scannedData && (
+      {scannedData && !scanned && (
+        <View className="mt-6 p-4 bg-indigo-100 rounded-lg w-11/12">
+          <Text className="text-lg text-indigo-800">Previous Scanned Data:</Text>
+          <Text className="text-md text-gray-700 mt-1">{scannedData}</Text>
+        </View>
+      )}
+
+      {scannedData && scanned && (
         <View className="mt-6 p-4 bg-indigo-100 rounded-lg w-11/12">
           <Text className="text-lg text-indigo-800">Scanned Data:</Text>
           <Text className="text-md text-gray-700 mt-1">{scannedData}</Text>
