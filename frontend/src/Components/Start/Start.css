@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    height: 90vh;
+    margin: 2rem;
+  }
+  
+  .textSection {
+    max-width: 50%;
+  }
+  
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .highlightedText {
+    text-decoration: line-through;
+    color: #FF6B6B;
+  }
+  
+  .description {
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+  
+  .buttonContainer {
+    margin-top: 30px;
+  }
+  
+  .getStartedButton {
+    background-color: #FF6B6B;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  
+  .howItWorksButton {
+    background-color: #E0E0E0;
+    color: #666;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .imageSection {
+    max-width: 50%;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .shape {
+    padding-left: 70px;
+    /* padding-right: 10000px; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 20px;
+  }
+  
+  .petrol {
+    scale: 0.8;
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    height: 90%;
+    z-index: 1;
+  }
+  
+  .social-start{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 30px;
+  }

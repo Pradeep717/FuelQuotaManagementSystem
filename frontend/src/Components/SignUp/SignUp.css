@@ -1,0 +1,116 @@
+.container-log-sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  /* background-color: #f6f5f7; */
+}
+
+.login-container {
+  background-color: #ffffff;
+  width: 900px;
+  display: flex;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 10px;
+}
+
+.form-container {
+  width: 50%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.overlay-panel {
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  width: 50%;
+  text-align: center;
+  border-radius: 0 10px 10px 0;
+}
+
+.overlay-right {
+  background: linear-gradient(to left, #ff416c, #ff4b2b); /* Reversed direction */
+  border-radius: 0 10px 10px 0;
+}
+
+.form-container h1 {
+  margin-bottom: 20px;
+}
+
+.social-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social {
+  margin: 0 10px;
+  color: #333;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+input {
+  background-color: #f6f5f7;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 5px;
+}
+.role {
+  background-color: #f6f5f7;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+}
+
+
+
+button {
+  background-color: #ff4b2b;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ff3b1b;
+}
+
+.ghost {
+  background-color: transparent;
+  border: 2px solid white;
+  padding: 10px 24px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.ghost:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#Role{
+  background-color: #f6f5f7;
+  border: none;
+  color: rgb(112, 96, 96);
+}
