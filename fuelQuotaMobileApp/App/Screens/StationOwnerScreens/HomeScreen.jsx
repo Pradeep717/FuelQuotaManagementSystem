@@ -40,7 +40,7 @@ const HomeScreen = () => {
     <View className="flex-1 justify-center items-center p-5 bg-white">
       <Text className="text-2xl font-bold text-indigo-600 mb-6"> Scan the QR Code</Text>
 
-      {!scanned && (
+      {/* {!scanned && (
         <View className="border border-indigo-300 rounded-lg overflow-hidden shadow-lg">
           <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={{ width: 350, height: 400 }} />
         </View>
@@ -57,7 +57,7 @@ const HomeScreen = () => {
         <TouchableOpacity className="mt-6 bg-indigo-600 px-5 py-3 rounded-full" onPress={() => setScanned(false)}>
           <Text className="text-white text-lg font-medium">Tap to Scan Again</Text>
         </TouchableOpacity>
-      )}
+      )} */}
     </View>
   );
 };
