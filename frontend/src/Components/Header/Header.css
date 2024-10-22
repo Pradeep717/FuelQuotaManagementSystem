@@ -1,0 +1,58 @@
+.header-container {
+  width: 100vw; /* Ensure the container spans the full width */
+  position: relative; /* Position relative to its parent */
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 130px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Align everything to the left */
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.navbar-brand img {
+  width: 80px; /* Adjust the size of the image */
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar-brand span {
+  font-size: 26px; /* Increase the font size */
+  font-weight: bold;
+  /* color: #333; Use a solid color for better readability */
+  letter-spacing: 5px; /* Add some letter-spacing for clearer text */
+}
+
+.navbar-info {
+  display: flex;
+  align-items: center;
+  /* margin-left: auto; Push the navbar-info to the far right */
+  padding-right: 20px; /* Adjust right padding */
+  justify-content: space-between;
+}
+
+.navbar-info div {
+  margin-left: 40px;
+  font-size: 20px;
+  color: #333; /* Make sure the text is readable */
+  cursor: pointer;
+}
+
+.logout{
+  color: black;
+}

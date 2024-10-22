@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .chart-container {
+    width: 50%;
+    margin: 20px auto;
+  }
+  
+  .tab-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .tab-container button {
+    background-color: #7e7a7a;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .tab-container button.active-tab {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  .tab-container button:hover {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  /* Table styles */
+  .table-container {
+    width: 80%;
+    margin: 20px auto;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .data-table th {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  .data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .data-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .data-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  /* Button styles */
+  .details-btn, .delete-btn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .details-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .details-btn:hover {
+    background-color: #218838;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
