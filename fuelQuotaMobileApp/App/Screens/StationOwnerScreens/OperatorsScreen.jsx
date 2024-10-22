@@ -30,7 +30,7 @@ export default OperatorsScreen;
 //   const [name, setName] = useState('');
 //   const [email, setEmail] = useState('');
 //   const [selectedGasStation, setSelectedGasStation] = useState('');
-//   const [gasStations, setGasStations] = useState([]);
+//   const [gasStations, setGasStations] = useState(null);
 
 //   // Fetch operators and gas stations from backend
 //   useEffect(() => {
@@ -49,7 +49,7 @@ export default OperatorsScreen;
 
 //   const fetchGasStations = async () => {
 //     try {
-//       const response = await axios.get('https://your-api-endpoint.com/gas-stations');
+//       const response = await axios.get(`${API_URL}/gas-stations`);
 //       setGasStations(response.data);
 //     } catch (error) {
 //       console.error('Error fetching gas stations:', error);
@@ -81,7 +81,8 @@ export default OperatorsScreen;
 //   };
 
 //   const searchOperators = () => {
-//     return operators.filter((operator) => operator.name.toLowerCase().includes(searchQuery.toLowerCase()));
+//     // return operators.filter((operator) => operator.name.toLowerCase().includes(searchQuery.toLowerCase()));
+//     return operators;
 //   };
 
 //   const removeOperator = async (operatorId) => {
@@ -121,9 +122,7 @@ export default OperatorsScreen;
 //             <StyledTextInput placeholder="Email" value={email} onChangeText={setEmail} className="border p-2 mb-2" keyboardType="email-address" />
 //             <Picker selectedValue={selectedGasStation} onValueChange={(itemValue) => setSelectedGasStation(itemValue)} className="border mb-2">
 //               <Picker.Item label="Select Gas Station" value="" />
-//               {gasStations.map((station) => (
-//                 <Picker.Item key={station.id} label={station.name} value={station.name} />
-//               ))}
+//               {gasStations && gasStations.map((station) => <Picker.Item key={station.id} label={station.name} value={station.name} />)}
 //             </Picker>
 //             <StyledButton title="Add" onPress={addOperator} />
 //             <StyledButton title="Cancel" onPress={() => setIsModalVisible(false)} color="red" />
