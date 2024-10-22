@@ -21,7 +21,7 @@ const ProfileScreen = () => {
         phoneNumber,
       });
 
-      updateUser(response.data);
+      updateUser(response.data.user);
 
       Alert.alert('Success', 'Profile updated successfully!');
       setIsEditing(false);
