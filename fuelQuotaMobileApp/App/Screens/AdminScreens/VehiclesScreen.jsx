@@ -77,7 +77,7 @@ const VehiclesScreen = () => {
                 <Text>Vehicle Number: {selectedVehicle.vehicleNumber}</Text>
                 <Text>Fuel Type: {selectedVehicle.fuelType}</Text>
                 <Text>Verified: {selectedVehicle.isVerified ? 'Yes' : 'No'}</Text>
-                <Text>Owner: {selectedVehicle.vehicleOwner}</Text>
+                <Text>Owner: {selectedVehicle.vehicleOwnerName}</Text>
 
                 <View className="flex-row justify-between mt-4">
                   <Button title="Delete" onPress={handleDeleteVehicle} color="red" />

@@ -1,8 +1,10 @@
 import FuelTransaction from "../models/fuelTransaction.js";
 import FuelQuota from "../models/fuelQuota.js";
 import Vehicle from "../models/vehicle.js";
+import User from "../models/user.js";
 import FuelStation from "../models/fuelStation.js";
 import mongoose from "mongoose";
+import sendSMS from "../utils/helpers/sendSMS.js";
 
 // Register a new fuel transaction
 export const registerFuelTransaction = async (req, res) => {
@@ -72,6 +74,13 @@ export const registerFuelTransaction = async (req, res) => {
 
     await session.commitTransaction();
     session.endSession();
+
+    // Send SMS to the vehicle owner
+    const user = await User.findById(vehicle.vehicleOwner);
+
+    // Send SMS to the vehicle owner
+    const message = `Dear ${user.name}, ${litresPumped} litres of fuel has been pumped at ${fuelStation.stationName}. Your remaining quota is ${quotaAfter} litres.`;
+    await sendSMS(user.phoneNumber, message);
 
     res.status(201).json({
       _id: newFuelTransaction._id,
