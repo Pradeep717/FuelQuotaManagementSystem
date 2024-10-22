@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Modal, Button, Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { API_URL } from '@env';
 
@@ -11,8 +10,8 @@ const OperatorsScreen = () => {
   const [selectedOperator, setSelectedOperator] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // Added password field for operator creation
-  const [phoneNumber, setPhoneNumber] = useState(''); // Added phone number field
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   // Fetch operators and gas stations from backend
   useEffect(() => {
@@ -47,7 +46,7 @@ const OperatorsScreen = () => {
       setEmail('');
       setPassword('');
       setPhoneNumber('');
-      fetchOperators(); // Refresh the list
+      fetchOperators();
       Alert.alert('Success', 'Operator successfully added!');
     } catch (error) {
       console.error('Error adding operator:', error);
