@@ -27,6 +27,12 @@ const fuelStationSchema = new mongoose.Schema(
         },
       },
     ],
+    stationOperators: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     station_regNumber: {
       type: String,
       required: true,

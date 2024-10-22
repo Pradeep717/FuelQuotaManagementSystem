@@ -132,7 +132,6 @@ const addStationOperator = async (req, res) => {
         .json({ message: "You are not authorized to add a station operator" });
     }
 
-    console.log("email: ", email);
     const existing = await User.findOne({ email });
     if (existing) {
       return res.status(400).json({ message: "User already exists" });
@@ -149,6 +148,17 @@ const addStationOperator = async (req, res) => {
     });
 
     await newOperator.save();
+
+    const fuelStation = await FuelStation.findOne({
+      fuelStationOwner: user._id,
+    });
+
+    if (!fuelStation) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    fuelStation.stationOperators.push(newOperator._id);
+    await fuelStation.save();
 
     if (newOperator) {
       res.status(201).json({
@@ -187,10 +197,47 @@ const deleteStationOperator = async (req, res) => {
 
     await operator.remove();
 
+    const fuelStation = await FuelStation.findOne({
+      fuelStationOwner: user._id,
+    });
+
+    if (!fuelStation) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    fuelStation.stationOperators = fuelStation.stationOperators.filter(
+      (operatorId) => !operatorId.equals(operator._id)
+    );
+    await fuelStation.save();
+
     res.status(200).json({ message: "Operator removed" });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in deleteStationOperator: ", error.message);
+  }
+};
+
+// Get all station operators for particular station owner
+const getAllStationOperators = async (req, res) => {
+  try {
+    const user = req.user;
+    const fuelStation = await FuelStation.findOne({
+      fuelStationOwner: user._id,
+    });
+
+    if (!fuelStation) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    // exclude password field, createdAt, updatedAt
+    const operators = await User.find(
+      { _id: { $in: fuelStation.stationOperators } },
+      "-password -createdAt -__v"
+    )
+    res.status(200).json(operators);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in getAllStationOperators: ", error.message);
   }
 };
 
@@ -221,4 +268,5 @@ export {
   addStationOperator,
   deleteStationOperator,
   deleteStation,
+  getAllStationOperators,
 }; // Export the functions
