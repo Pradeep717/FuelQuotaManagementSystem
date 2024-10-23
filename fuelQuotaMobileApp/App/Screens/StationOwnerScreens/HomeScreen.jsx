@@ -4,7 +4,7 @@ import React from 'react';
 const HomeScreen = () => {
   return (
     <View className="flex-1 justify-center items-center p-10">
-      <Text> Station Owner HomeScreen</Text>
+      <Text>Station Owner HomeScreen</Text>
     </View>
   );
 };
