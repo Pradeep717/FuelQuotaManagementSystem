@@ -14,6 +14,7 @@ const ProfileScreen = () => {
 
   const handleSave = async () => {
     try {
+      //This backend check thers is an error for operator update
       const response = await axios.put(`${API_URL}/api/users/update/${user._id}`, {
         name,
         email,

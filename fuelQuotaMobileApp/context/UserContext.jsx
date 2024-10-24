@@ -79,7 +79,11 @@ export const UserProvider = ({ children }) => {
   // }
   // };
 
-  return <UserContext.Provider value={{ user, loginUser, signupUser, logoutUser }}>{children}</UserContext.Provider>;
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser);
+  };
+
+  return <UserContext.Provider value={{ user, loginUser, signupUser, logoutUser, updateUser }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => useContext(UserContext);
