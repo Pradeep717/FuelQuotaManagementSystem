@@ -116,14 +116,17 @@ export const checkFuelQuota = async (req, res) => {
       return;
     }
 
-    if (fuelQuota.remainingQuota > 0) {
-      res.status(200).json({
-        vehicle: vehicle._id,
-        remainingQuota: fuelQuota.remainingQuota,
-      });
-    } else {
-      res.status(400).json({ message: "Insufficient Quota" });
-    }
+    const usedQuota = fuelQuota.allocatedQuota - fuelQuota.remainingQuota;
+    const status = fuelQuota.remainingQuota > 0;
+
+    res.status(200).json({
+      vehicle: vehicle._id,
+      remainingQuota: fuelQuota.remainingQuota,
+      allocatedQuota: fuelQuota.allocatedQuota,
+      usedQuota: usedQuota,
+      message: status ? "Sufficient quota available" : "Insufficient quota",
+      status: status
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in checkFuelQuota: ", error.message);
