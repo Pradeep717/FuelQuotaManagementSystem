@@ -20,7 +20,8 @@ const OperatorsScreen = () => {
 
   const fetchOperators = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/stations`);
+      const response = await axios.get(`${API_URL}/api/stations/getAllStationOperators`);
+      // console.log(response.data);
       setOperators(response.data);
     } catch (error) {
       console.error('Error fetching operators:', error);
