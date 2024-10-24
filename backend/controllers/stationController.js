@@ -260,6 +260,20 @@ const deleteStation = async (req, res) => {
   }
 };
 
+const getAllStaionsByUserId = async (req, res) => {
+  try {
+    const user = req.user;
+    const stations = await FuelStation.find({ fuelStationOwner: user._id })
+      .populate("fuelStationOwner", "name email")
+      .populate(`registeredVehicles.vehicle`, "vehicleNumber vehicleType");
+    res.status(200).json(stations);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in getAllStaionsByUserId: ", error.message);
+  }
+};
+
+
 export {
   registerStation,
   updateStation,
@@ -269,4 +283,5 @@ export {
   deleteStationOperator,
   deleteStation,
   getAllStationOperators,
+  getAllStaionsByUserId,
 }; // Export the functions
