@@ -145,4 +145,20 @@ const deleteVehicle = async (req, res) => {
   }
 };
 
-export { registerVehicle, getAllVehicles, getVehicleById, deleteVehicle };
+const getAllVehiclesByUSerID = async (req, res) => {
+  try {
+
+    if(req.user.role !== "vehicle_owner") {
+      res.status(400).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const vehicles = await Vehicle.find({ vehicleOwner: req.user._id });
+    res.status(200).json(vehicles);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log("Error in getAllVehiclesByUSerID: ", error.message);
+  }
+}
+
+export { registerVehicle, getAllVehicles, getVehicleById, deleteVehicle, getAllVehiclesByUSerID };
