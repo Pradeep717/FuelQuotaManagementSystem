@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import axios from 'axios';
+import { API_URL } from '@env';
+import { useUser } from '../../../context/UserContext';
 
 const HomeScreen = () => {
+  const { user } = useUser();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState(null);
@@ -15,11 +19,38 @@ const HomeScreen = () => {
     requestCameraPermission();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     setScannedData(data);
     // Alert.alert('Scanned QR Code', `Type: ${type}\nData: ${data}`, [{ text: 'OK', onPress: () => setScanned(false) }]);
     Alert.alert('Scanned QR Code', `Type: ${type}\nData: ${data}`, [{ text: 'OK' }]);
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/fuel/check-quota`,
+        {
+          qrData: data, 
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`, 
+          },
+        }
+      );
+      console.log(response);
+      
+      if (response.status === 200) {
+        Alert.alert('Quota Check', response.data.message || 'Quota details retrieved successfully.');
+      } else {
+        Alert.alert('Error', response.data.message || 'Failed to check quota.');
+      }
+    } catch (error) {
+      console.error('Error checking quota:', error);
+      Alert.alert('Error', error.response?.data?.message || 'Failed to check quota.');
+    } finally {
+      // Reset the scanned state after the alert
+      // setScanned(false);
+    }
   };
 
   if (hasPermission === null) {
