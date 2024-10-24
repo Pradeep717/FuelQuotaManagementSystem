@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../utils/helpers/genarateTokenAndSetCookie.js";
+import FuelStation from "../models/fuelStation.js";
+import Vehicle from "../models/vehicle.js";
 
 // Signup a new user
 const signupUser = async (req, res) => {
@@ -55,12 +57,23 @@ const loginUser = async (req, res) => {
     if (isPasswordCorrect) {
       generateTokenAndSetCookie(user._id, res);
 
+      let additionalData = {};
+
+      if (user.role === "station_owner") {
+        const stations = await FuelStation.find({ fuelStationOwner: user._id });
+        additionalData.stations = stations;
+      } else if (user.role === "vehicle_owner") {
+        const vehicles = await Vehicle.find({ vehicleOwner: user._id });
+        additionalData.vehicles = vehicles;
+      }
+
       res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
         phoneNumber: user.phoneNumber,
+        ...additionalData,
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
