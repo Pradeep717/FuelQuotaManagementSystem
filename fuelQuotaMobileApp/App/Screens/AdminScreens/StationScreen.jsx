@@ -62,7 +62,7 @@ const StationScreen = () => {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-white">
       <Image source={images.gasStation} className="w-full h-[320px] " resizeMode="contain" />
 
       <View className="flex-1 p-4 pt-2 ">
@@ -84,14 +84,16 @@ const StationScreen = () => {
         />
 
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
-          <View className="flex-1 justify-center items-center bg-opacity-50">
-            <View className="bg-white p-8 rounded-lg w-8/12 max-h-3/4">
+          <View className="flex-1 justify-center items-center bg-opacity-50 shadow-lg">
+            <View className="bg-white p-8 rounded-lg w-10/12 max-h-3/4">
               {selectedStation && (
                 <>
                   <Text className="text-3xl font-semibold mb-4">{selectedStation.stationName}</Text>
-                  <Text>Location: {selectedStation.location}</Text>
-                  <Text>Station_regNumber: {selectedStation.station_regNumber}</Text>
-                  <Text>Station Owner: {selectedStation.fuelStationOwner.name}</Text>
+                  <View className="h-[1px] bg-gray-300 mb-4" />
+
+                  <Text className="mb-1">Location: {selectedStation.location}</Text>
+                  <Text className="mb-1">Station_regNumber: {selectedStation.station_regNumber}</Text>
+                  <Text className="mb-1">Station Owner: {selectedStation.fuelStationOwner.name}</Text>
 
                   {selectedStation.registeredVehicles && selectedStation.registeredVehicles.length > 0 ? (
                     <>

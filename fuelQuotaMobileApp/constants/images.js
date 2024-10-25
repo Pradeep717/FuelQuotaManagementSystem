@@ -11,5 +11,6 @@ import liquor from '../assets/images/fuelWebasserts/IMG-20241025-WA0013.jpg';
 import qrScanner from '../assets/images/fuelWebasserts/IMG-20241025-WA0014.jpg';
 import books from '../assets/images/fuelWebasserts/IMG-20241025-WA0015.jpg';
 import logo from '../assets/images/fuelWebasserts/IMG-20241025-WA0016.jpg';
+import moreVehicle from '../assets/images/fuelWebasserts/vechilesHome.jpg';
 
-export default { idCard, gasStation, twoPersons, vehicle, liquor, qrScanner, books, logo };
+export default { idCard, gasStation, twoPersons, vehicle, liquor, qrScanner, books, logo, moreVehicle };

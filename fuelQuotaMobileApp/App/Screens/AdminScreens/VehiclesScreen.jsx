@@ -59,7 +59,7 @@ const VehiclesScreen = () => {
   return (
     <View className="flex-1">
       <HomeHeader />
-      <Image source={images.vehicle} className="w-full h-[120px] " resizeMode="contain" />
+      <Image source={images.moreVehicle} className="w-full h-[220px] " resizeMode="contain" />
 
       <View className="p-4 flex-1 bg-white">
         <View className="flex-row items-center justify-between border p-2 rounded-2xl mb-4 h-12">
@@ -84,10 +84,11 @@ const VehiclesScreen = () => {
               {selectedVehicle && (
                 <>
                   <Text className="text-3xl font-semibold mb-4"> {selectedVehicle.vehicleType}</Text>
-                  <Text>Vehicle Number: {selectedVehicle.vehicleNumber}</Text>
-                  <Text>Fuel Type: {selectedVehicle.fuelType}</Text>
-                  <Text>Verified: {selectedVehicle.isVerified ? 'Yes' : 'No'}</Text>
-                  <Text>Owner: {selectedVehicle.vehicleOwnerName}</Text>
+                  <View className="h-[1px] bg-gray-300 mb-4" />
+                  <Text className="mb-2">Vehicle Number: {selectedVehicle.vehicleNumber}</Text>
+                  <Text className="mb-2">Fuel Type: {selectedVehicle.fuelType}</Text>
+                  <Text className="mb-2">Verified: {selectedVehicle.isVerified ? 'Yes' : 'No'}</Text>
+                  <Text className="mb-2">Owner: {selectedVehicle.vehicleOwnerName}</Text>
 
                   <View className="flex-row justify-between mt-4">
                     <Button title="Delete" onPress={handleDeleteVehicle} color="red" />
