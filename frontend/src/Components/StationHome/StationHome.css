@@ -1,0 +1,12 @@
+.qr-scan {
+    background-image: url('../../../src/assets/Images/scan.png');
+  }
+
+.create-opera {
+    background-image: url('../../../src/assets/Images/operator.png');
+  }
+
+.station-name{
+  margin: 2%;
+  color: #ff6b6b;
+}
