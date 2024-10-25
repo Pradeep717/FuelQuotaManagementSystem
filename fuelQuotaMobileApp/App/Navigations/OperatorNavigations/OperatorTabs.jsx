@@ -11,6 +11,8 @@ const OperatorTabs = () => (
   <Tab.Navigator
     screenOptions={{
       headerShown: false,
+      tabBarActiveTintColor: '#ff4b2b',
+      tabBarInactiveTintColor: '#999',
     }}
   >
     <Tab.Screen
@@ -22,7 +24,7 @@ const OperatorTabs = () => (
       }}
     />
     <Tab.Screen
-      name="vProfile"
+      name="Profile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',

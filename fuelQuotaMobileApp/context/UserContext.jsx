@@ -3,10 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { API_URL } from '@env';
-
-// import AdminTabs from '../App/Navigations/AdminNavigations/AdminTabs';
-// import VehicleOwnerTabs from '../App/Navigations/VehicleOwnerNavigations/VehicleOwnerTabs';
-// import StationOwnerTabs from '../App/Navigations/StationOwnerNavigations/StationOwnerTabs';
+import { Alert } from 'react-native';
 
 const UserContext = createContext();
 
@@ -18,12 +15,10 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if the user is already logged in
     const checkUser = async () => {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
         setUser(JSON.parse(userData));
-        // navigateToRoleBasedScreen(JSON.parse(userData).role);
       }
       setLoading(false);
     };
@@ -37,8 +32,8 @@ export const UserProvider = ({ children }) => {
 
       await AsyncStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
-      // navigateToRoleBasedScreen(userData.role);
     } catch (error) {
+      Alert.alert('Login Error', 'Please check your credentials and try again.');
       console.error('Login error:', error);
     }
   };
@@ -56,28 +51,7 @@ export const UserProvider = ({ children }) => {
     await AsyncStorage.removeItem('user');
     setUser(null);
     navigation.navigate('Login');
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: 'Login' }], // Navigate back to the Login screen
-    // });
   };
-
-  // const navigateToRoleBasedScreen = (role) => {
-  // if (role === 'vehicle_owner') {
-  //   navigation.navigate('VehicleOwnerTabs');
-  // } else if (role === 'station_owner') {
-  //   navigation.navigate('StationOwnerTabs');
-  // } else if (role === 'admin') {
-  //   navigation.navigate('AdminTabs');
-  // }
-  // if (role === 'vehicle_owner') {
-  //   navigation.navigate(VehicleOwnerTabs);
-  // } else if (role === 'station_owner') {
-  //   navigation.navigate(StationOwnerTabs);
-  // } else if (role === 'admin') {
-  //   navigation.navigate(AdminTabs);
-  // }
-  // };
 
   const updateUser = (updatedUser) => {
     setUser(updatedUser);

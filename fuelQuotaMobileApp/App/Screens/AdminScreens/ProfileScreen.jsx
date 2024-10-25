@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, Alert, Image, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { API_URL } from '@env';
 import { useUser } from '../../../context/UserContext';
+import images from '../../../constants/images';
 
 const ProfileScreen = () => {
   const { logoutUser, user, updateUser } = useUser();
@@ -31,12 +32,18 @@ const ProfileScreen = () => {
   };
 
   return (
-    <View className="flex-1 justify-center p-10 bg-white">
-      <View className="h-20 w-20 rounded-full bg-blue-500 justify-center items-center mb-2 self-center">
-        <Text className="text-3xl font-bold text-white">{user.name.charAt(0).toUpperCase()}</Text>
-      </View>
+    <View className="flex-1 justify-center  bg-white">
+      <ImageBackground
+        source={images.idCard} // Replace with your image id or URI
+        className="flex-1 justify-center w-full h-[320px]"
+        resizeMode="cover"
+      >
+        <View className="h-[130px] w-[130px] rounded-full bg-gray-500 border-baseColor border-[4px] justify-center items-center mt-[200px] self-center">
+          <Text className="text-5xl font-bold text-white">{user.name.charAt(0).toUpperCase()}</Text>
+        </View>
+      </ImageBackground>
 
-      <View className="flex-row justify-end mb-4 pr-4">
+      <View className="flex-row justify-end mb-2 pr-4">
         {/* {!isEditing && <Text className="text-xl">Edit </Text>} */}
         <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
           <Ionicons name={isEditing ? 'close' : 'pencil'} size={24} color="#007BFF" />

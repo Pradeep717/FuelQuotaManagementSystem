@@ -121,7 +121,8 @@ const getAllVehicles = async (req, res) => {
 // Get vehicle by id
 const getVehicleById = async (req, res) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.id).select("-updatedAt");
+    const vehicle = await Vehicle.findById(req.params.id).select("-updatedAt")
+      .populate("vehicleOwner", "name");
     res.status(200).json(vehicle);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -132,13 +133,12 @@ const getVehicleById = async (req, res) => {
 // Delete vehicle by id
 const deleteVehicle = async (req, res) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.id);
-    if (!vehicle) {
-      return res.status(404).json({ message: "Vehicle not found" });
+    const result = await Vehicle.findByIdAndDelete(req.params.id);
+    if (!result) {
+      res.status(404).json({ message: "Vehicle not found" });
+      return;
     }
-
-    await vehicle.remove();
-    res.status(200).json({ message: "Vehicle removed" });
+    res.status(200).json({ message: "Vehicle deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in deleteVehicle: ", error.message);
@@ -154,7 +154,27 @@ const getAllVehiclesByUSerID = async (req, res) => {
     }
 
     const vehicles = await Vehicle.find({ vehicleOwner: req.user._id });
-    res.status(200).json(vehicles);
+
+    // Fetch the fuel quota details for each vehicle
+    const vehicleDetails = await Promise.all(
+      vehicles.map(async (vehicle) => {
+        const fuelQuota = await FuelQuota.findOne({ vehicle: vehicle._id });
+        return {
+          _id: vehicle._id,
+          vehicleNumber: vehicle.vehicleNumber,
+          qrCode: vehicle.qrCode,
+          vehicleType: vehicle.vehicleType,
+          fuelType: vehicle.fuelType,
+          isVerified: vehicle.isVerified,
+          createdAt: vehicle.createdAt,
+          remainingQuota: fuelQuota ? fuelQuota.remainingQuota : 0,
+          allocatedQuota: fuelQuota ? fuelQuota.allocatedQuota : 0,
+          usedQuota: fuelQuota ? fuelQuota.allocatedQuota - fuelQuota.remainingQuota : 0,
+        };
+      })
+    );
+
+    res.status(200).json(vehicleDetails);
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in getAllVehiclesByUSerID: ", error.message);
