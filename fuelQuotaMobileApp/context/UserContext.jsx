@@ -3,6 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { API_URL } from '@env';
+import { Alert } from 'react-native';
 
 // import AdminTabs from '../App/Navigations/AdminNavigations/AdminTabs';
 // import VehicleOwnerTabs from '../App/Navigations/VehicleOwnerNavigations/VehicleOwnerTabs';
@@ -39,6 +40,7 @@ export const UserProvider = ({ children }) => {
       setUser(userData);
       // navigateToRoleBasedScreen(userData.role);
     } catch (error) {
+      Alert.alert('Login Error', 'Please check your credentials and try again.');
       console.error('Login error:', error);
     }
   };
