@@ -154,7 +154,27 @@ const getAllVehiclesByUSerID = async (req, res) => {
     }
 
     const vehicles = await Vehicle.find({ vehicleOwner: req.user._id });
-    res.status(200).json(vehicles);
+
+    // Fetch the fuel quota details for each vehicle
+    const vehicleDetails = await Promise.all(
+      vehicles.map(async (vehicle) => {
+        const fuelQuota = await FuelQuota.findOne({ vehicle: vehicle._id });
+        return {
+          _id: vehicle._id,
+          vehicleNumber: vehicle.vehicleNumber,
+          qrCode: vehicle.qrCode,
+          vehicleType: vehicle.vehicleType,
+          fuelType: vehicle.fuelType,
+          isVerified: vehicle.isVerified,
+          createdAt: vehicle.createdAt,
+          remainingQuota: fuelQuota ? fuelQuota.remainingQuota : 0,
+          allocatedQuota: fuelQuota ? fuelQuota.allocatedQuota : 0,
+          usedQuota: fuelQuota ? fuelQuota.allocatedQuota - fuelQuota.remainingQuota : 0,
+        };
+      })
+    );
+
+    res.status(200).json(vehicleDetails);
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in getAllVehiclesByUSerID: ", error.message);
