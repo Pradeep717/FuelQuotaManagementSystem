@@ -7,7 +7,8 @@ import 'react-circular-progressbar/dist/styles.css';
 import { Link } from 'react-router-dom';
 
 const VehicleHome = () => {
-  const fuelQuota = 35; // 35% quota available
+  const fuelQuota1 = 35; // 35% quota available
+  const fuelQuota2 = 25; // 35% quota available
 
   return (
     <div>
@@ -38,19 +39,40 @@ const VehicleHome = () => {
         </Link>
         
       </div>
+      <h1 style={{color:"#ff4b2b",marginTop:"25px"}}>Registered Vehicle</h1>
       <div className="fuel-ava">
-          <h1>Available Fuel Quota</h1>
-          <div style={{ width: '200px', margin: '2% auto' }}>
-              <CircularProgressbar
-                value={fuelQuota}
-                text={`${fuelQuota}L`}
-                styles={buildStyles({
-                  textColor: '#ff3b1b', 
-                  pathColor: '#ff3b1b', 
-                  trailColor: '#eee',
-                })}
-              />
-            </div>
+
+            <Link to="/fuel-quota">
+            <div style={{ width: '200px', margin: '2% auto' }}>
+            <h1 style={{color:"#8f868f",marginBottom:"20px",fontSize:"25px"}}>Vehicle Number Plate Number</h1>
+                <CircularProgressbar
+                  value={fuelQuota1}
+                  text={`${fuelQuota1}L`}
+                  styles={buildStyles({
+                    textColor: '#ff3b1b', 
+                    pathColor: '#ff3b1b', 
+                    trailColor: '#eee',
+                  })}
+                />
+                <button className='button'>See Details</button>
+              </div>
+            </Link>
+            
+            <Link to="/fuel-quota">
+            <div style={{ width: '200px', margin: '2% auto' }}>
+            <h1 style={{color:"#8f868f",marginBottom:"20px",fontSize:"25px"}}>Vehicle Number Plate Number</h1>
+                <CircularProgressbar
+                  value={fuelQuota2}
+                  text={`${fuelQuota2}L`}
+                  styles={buildStyles({
+                    textColor: '#ff3b1b', 
+                    pathColor: '#ff3b1b', 
+                    trailColor: '#eee',
+                  })}
+                />
+                <button className='button'>See Details</button>
+              </div>
+            </Link>
         </div>
       <Footer />
     </div>

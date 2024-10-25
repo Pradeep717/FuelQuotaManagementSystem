@@ -47,6 +47,15 @@
     gap: 2%;
   }
   
-  .fuel-ava{
-    margin: 2%;
+  .fuel-ava {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* Vertically centers the items */
+    gap: 5%;
+    cursor: pointer;
+    padding: 0 10%; /* Remove unnecessary padding values */
+    margin-top: 1%;
   }
+  
