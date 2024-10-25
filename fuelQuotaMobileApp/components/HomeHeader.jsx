@@ -9,7 +9,7 @@ const HomeHeader = () => {
   const navigation = useNavigation();
 
   const profileNavigate = () => {
-    navigation.navigate('aProfile'); // Adjust this to match your Profile screen's name
+    navigation.navigate('Profile'); // Adjust this to match your Profile screen's name
   };
 
   return (

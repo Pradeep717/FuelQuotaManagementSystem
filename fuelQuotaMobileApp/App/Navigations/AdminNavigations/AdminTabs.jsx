@@ -35,7 +35,7 @@ const AdminTabs = () => (
       }}
     />
     <Tab.Screen
-      name="aProfile"
+      name="Profile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
