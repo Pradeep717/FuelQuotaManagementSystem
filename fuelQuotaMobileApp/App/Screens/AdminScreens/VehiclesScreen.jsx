@@ -63,7 +63,7 @@ const VehiclesScreen = () => {
 
       <View className="p-4 flex-1 bg-white">
         <View className="flex-row items-center justify-between border p-2 rounded-2xl mb-4 h-12">
-          <TextInput placeholder="Search vehicles Number ..." value={searchTerm} onChangeText={handleSearch} />
+          <TextInput className="flex-auto" placeholder="Search vehicles Number ..." value={searchTerm} onChangeText={handleSearch} />
           <AntDesign name="search1" size={24} color="#ff4b2b" />
         </View>
 
