@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity, Alert, Modal } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableOpacity, Alert, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import axios from 'axios';
 import { API_URL } from '@env';
-import { useUser } from '../../../context/UserContext'; // Assuming user details are accessible here
+import { useUser } from '../../../context/UserContext';
 import QRCode from 'react-native-qrcode-svg';
+import HomeHeader from '../../../components/HomeHeader';
+import { Image } from 'react-native';
+import images from '../../../constants/images';
+import { Ionicons } from '@expo/vector-icons';
 
 const HomeScreen = () => {
   const { user } = useUser();
@@ -20,7 +24,7 @@ const HomeScreen = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
+
       setVehicles(response.data || []);
     } catch (error) {
       console.error('Error fetching user vehicles:', error);
@@ -74,38 +78,56 @@ const HomeScreen = () => {
   };
 
   const renderVehicleItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleSelectVehicle(item)} className="p-4 border-b border-gray-200">
-      <Text className="text-lg">{item.vehicleNumber}</Text>
+    <TouchableOpacity onPress={() => handleSelectVehicle(item)} className="bg-white rounded-lg shadow-md p-4 mb-4 border border-gray-300">
+      <Text className="text-lg font-medium">{item.vehicleNumber}</Text>
+      <Text className="text-baseColor font-semibold">Type: {item.vehicleType}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <View className="flex-1 p-10 bg-white">
-      <Text className="text-2xl font-bold mb-6 text-center">Vehicle Owner HomeScreen</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View className="flex-1">
+        <HomeHeader />
 
-      {/* Form to add a new vehicle */}
-      <TextInput value={vehicleNumber} onChangeText={setVehicleNumber} placeholder="Enter Vehicle Number" className="border border-gray-300 rounded p-2 mb-4" />
-      <Button title="Add Vehicle" onPress={handleAddVehicle} color="#007BFF" />
+        <Image source={images.regVehicle} className="w-full h-[202px] " resizeMode="contain" />
 
-      {/* List of registered vehicles */}
-      <FlatList data={vehicles} keyExtractor={(item) => item._id} renderItem={renderVehicleItem} className="mt-6" />
+        <View className="flex-1 pb-10 pt-6 px-4 bg-white">
+          <View className="flex-row items-center justify-between mb-2">
+            <View className="flex-1 border px-4 rounded-2xl h-12">
+              <TextInput className="flex-1" placeholder="Enter Vehicle Number to Add" value={vehicleNumber} onChangeText={setVehicleNumber} />
+            </View>
 
-      {/* Modal to show vehicle details including QR code */}
-      <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
-        <View className="flex-1 justify-center items-center p-10 bg-white">
-          {selectedVehicle && (
-            <>
-              <Text className="text-2xl font-bold mb-4">Vehicle Details</Text>
-              <Text className="text-lg">Number: {selectedVehicle.vehicleNumber}</Text>
-              <View className="my-4">
-                <QRCode value={selectedVehicle.vehicleNumber} size={200} />
-              </View>
-              <Button title="Close" onPress={() => setModalVisible(false)} color="#007BFF" />
-            </>
-          )}
+            <TouchableOpacity onPress={handleAddVehicle} className="bg-red-500 p-3 rounded-full ml-2">
+              <Ionicons name="add" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+
+          <Text className="mt-4 text-xl">List of registered vehicles</Text>
+          <View className="h-[1px] bg-gray-300 mt-1 mb-4" />
+
+          <FlatList data={vehicles} keyExtractor={(item) => item._id} renderItem={renderVehicleItem} />
+
+          {/* Modal to show vehicle details including QR code */}
+          <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
+            <View className="flex-1 justify-center items-center p-10 bg-white">
+              {selectedVehicle && (
+                <>
+                  <Text className="text-2xl mb-4 text-baseColor font-semibold">Vehicle Details</Text>
+                  <Text className="text-lg">Number: {selectedVehicle.vehicleNumber}</Text>
+                  <View className="my-4 border rounded-lg p-4">
+                    <QRCode value={selectedVehicle.vehicleNumber} size={300} />
+                  </View>
+
+                  <TouchableOpacity onPress={() => setModalVisible(false)} className="bg-baseColor py-3 w-full mt-4 rounded-xl">
+                    <Text className="text-center text-white font-bold text-lg">Close</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+          </Modal>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
