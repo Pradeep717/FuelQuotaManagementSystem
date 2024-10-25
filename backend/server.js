@@ -19,7 +19,8 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,22 +34,22 @@ app.use("/api/stations", stationRoutes); // Ensure stations route is registered 
 app.use("/", (req, res) => res.send("API is running..."));
 // app.use('/api/vehicles', vehicleRoutes);
 
-// // CRON job to reset remaining quota at midnight every Sunday
-// cron.schedule("0 0 * * 1", async () => {
-//   try {
-//     // Find all fuel quotas
-//     const fuelQuotas = await FuelQuota.find({});
+// CRON job to reset remaining quota at midnight every Sunday
+cron.schedule("0 0 * * 1", async () => {
+  try {
+    // Find all fuel quotas
+    const fuelQuotas = await FuelQuota.find({});
 
-//     // Update each quota
-//     for (let quota of fuelQuotas) {
-//       quota.remainingQuota = quota.allocatedQuota;
-//       await quota.save();
-//     }
+    // Update each quota
+    for (let quota of fuelQuotas) {
+      quota.remainingQuota = quota.allocatedQuota;
+      await quota.save();
+    }
 
-//     console.log("Fuel quotas reset to allocatedQuota successfully");
-//   } catch (error) {
-//     console.error("Error in resetting fuel quotas: ", error.message);
-//   }
-// });
+    console.log("Fuel quotas reset to allocatedQuota successfully");
+  } catch (error) {
+    console.error("Error in resetting fuel quotas: ", error.message);
+  }
+});
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
