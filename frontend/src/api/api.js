@@ -27,4 +27,15 @@ export const logoutUser = async () => {
   }
 };
 
+// Sign up a new user
+export const signupUser = async (userData) => {
+    try {
+      const response = await api.post('/api/users/signup', userData); // Call the signup endpoint
+      return response.data; // Return the response data
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+  };
+
 export default api;
