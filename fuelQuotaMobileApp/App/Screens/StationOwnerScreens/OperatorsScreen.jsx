@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Modal, Button, Alert } from 'react-native';
 import axios from 'axios';
 import { API_URL } from '@env';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const OperatorsScreen = () => {
   const [operators, setOperators] = useState([]);
@@ -56,8 +57,8 @@ const OperatorsScreen = () => {
   };
 
   const searchOperators = () => {
-    // return operators.filter((operator) => operator.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    return operators;
+    return operators.filter((operator) => operator.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    // return operators;
   };
 
   const removeOperator = async (operatorId) => {
@@ -75,7 +76,15 @@ const OperatorsScreen = () => {
   return (
     <View className="flex-1 p-4 pt-8">
       <Button title="Add Operator" onPress={() => setIsModalVisible(true)} />
-      <TextInput className="border p-2 mb-4 mt-4" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} />
+
+      <View className="flex-row w-full items-center justify-between border p-2 rounded-2xl mb-6 h-12">
+        <TextInput className="w-full-[2px]" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} />
+        <AntDesign name="search1" size={24} color="#ff4b2b" />
+      </View>
+
+      {/* <TextInput className="border p-2 mb-4 mt-4" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} /> */}
+      <View className="h-[1px] bg-gray-300 mb-4" />
+
       <FlatList
         data={searchOperators()}
         keyExtractor={(item) => item._id}

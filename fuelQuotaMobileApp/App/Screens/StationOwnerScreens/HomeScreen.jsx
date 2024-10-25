@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert, FlatList, ScrollView } from 'reac
 import axios from 'axios';
 import { API_URL } from '@env';
 import { useUser } from '../../../context/UserContext';
+import HomeHeader from '../../../components/HomeHeader';
 
 const HomeScreen = () => {
   const { user } = useUser();
@@ -63,51 +64,57 @@ const HomeScreen = () => {
   };
 
   return (
-    <View className="flex-1 justify-center p-5 bg-white">
-      {!isRegistered ? (
-        <>
-          <Text className="text-lg mb-2">Station Name:</Text>
-          <TextInput value={stationName} onChangeText={setStationName} placeholder="Enter Station Name" className="border border-gray-300 rounded p-2 mb-4" />
+    <View className="flex-1 justify-center bg-white">
+      <HomeHeader />
+      <View className="flex-1 justify-center px-4 bg-white">
+        {!isRegistered ? (
+          <>
+            <Text className="text-lg mb-2">Station Name:</Text>
+            <TextInput value={stationName} onChangeText={setStationName} placeholder="Enter Station Name" className="border border-gray-300 rounded p-2 mb-4" />
 
-          <Text className="text-lg mb-2">Location:</Text>
-          <TextInput value={location} onChangeText={setLocation} placeholder="Enter Location" className="border border-gray-300 rounded p-2 mb-4" />
+            <Text className="text-lg mb-2">Location:</Text>
+            <TextInput value={location} onChangeText={setLocation} placeholder="Enter Location" className="border border-gray-300 rounded p-2 mb-4" />
 
-          <Text className="text-lg mb-2">Station Registration Number:</Text>
-          <TextInput value={stationRegNumber} onChangeText={setStationRegNumber} placeholder="Enter Registration Number" className="border border-gray-300 rounded p-2 mb-4" />
+            <Text className="text-lg mb-2">Station Registration Number:</Text>
+            <TextInput value={stationRegNumber} onChangeText={setStationRegNumber} placeholder="Enter Registration Number" className="border border-gray-300 rounded p-2 mb-4" />
 
-          <Button title="Register Station" onPress={handleRegister} color="#007BFF" />
-        </>
-      ) : (
-        <>
-          <View className="items-center pt-8 ">
-            <View className="bg-gray-100 p-5 rounded-lg shadow mb-4 w-full ">
-              <Text className="text-2xl font-semibold mb-2">Station Details</Text>
-              <Text className="text-base mb-1">Station Name: {stationDetails?.stationName}</Text>
-              <Text className="text-base mb-1">Location: {stationDetails?.location}</Text>
-              <Text className="text-base mb-1">Reg. Number: {stationDetails?.station_regNumber}</Text>
-              <Text className="text-base">Created At: {new Date(stationDetails?.createdAt).toLocaleDateString()}</Text>
+            <Button title="Register Station" onPress={handleRegister} color="#007BFF" />
+          </>
+        ) : (
+          <>
+            <View className="items-center pt-8 ">
+              <View className="bg-gray-500 p-4 rounded-lg shadow mb-4 w-full ">
+                <Text className="text-2xl font-semibold mb-2 text-baseColor">Station Details</Text>
+                <View className="h-[1px] bg-gray-300 mb-4" />
+                <Text className="text-white text-base mb-1">Station Name: {stationDetails?.stationName}</Text>
+                <Text className="text-white text-base mb-1">Location: {stationDetails?.location}</Text>
+                <Text className="text-white text-base mb-1">Reg. Number: {stationDetails?.station_regNumber}</Text>
+                <Text className="text-white text-base">Created At: {new Date(stationDetails?.createdAt).toLocaleDateString()}</Text>
+              </View>
             </View>
-          </View>
 
-          <View className="flex-1">
-            <Text className="text-lg font-semibold mb-2">Fuel Pumped Vehicles</Text>
-            <ScrollView className="flex-1">
-              {stationDetails?.registeredVehicles?.length > 0 ? (
-                stationDetails.registeredVehicles.map((vehicle, index) => (
-                  <View key={vehicle._id} className="bg-white border border-gray-300 rounded-lg p-4 mb-2 shadow">
-                    <Text className="text-base font-medium">Vehicle ID: {vehicle._id}</Text>
-                    <Text className="text-base">Owner: {vehicle.ownerName}</Text>
-                    <Text className="text-base">Fuel Type: {vehicle.fuelType}</Text>
-                    <Text className="text-base">Last Refueled: {new Date(vehicle.lastRefueled).toLocaleDateString()}</Text>
-                  </View>
-                ))
-              ) : (
-                <Text className="text-base">No Fuel-Up Records found.</Text>
-              )}
-            </ScrollView>
-          </View>
-        </>
-      )}
+            <View className="flex-1">
+              <Text className="text-lg font-semibold mt-4 mb-2">Fuel Pumped Vehicles</Text>
+              <View className="h-[1px] bg-gray-300 mb-4" />
+
+              <ScrollView className="flex-1">
+                {stationDetails?.registeredVehicles?.length > 0 ? (
+                  stationDetails.registeredVehicles.map((vehicle, index) => (
+                    <View key={vehicle._id} className="bg-white border border-gray-300 rounded-lg p-4 mb-2 shadow">
+                      <Text className="text-base font-medium">Vehicle ID: {vehicle.vehicle.vehicleNumber}</Text>
+                      {/* <Text className="text-base">Owner: {vehicle.vehicle.ownerName}</Text> */}
+                      <Text className="text-base">Vehicle Type: {vehicle.vehicle.vehicleType}</Text>
+                      <Text className="text-base">Last Refueled: {new Date(vehicle.date).toLocaleDateString()}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text className="text-base">No Fuel-Up Records found.</Text>
+                )}
+              </ScrollView>
+            </View>
+          </>
+        )}
+      </View>
     </View>
   );
 };
