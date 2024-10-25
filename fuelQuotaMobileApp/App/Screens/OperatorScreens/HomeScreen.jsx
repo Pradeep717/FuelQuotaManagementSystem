@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import { useUser } from '../../../context/UserContext';
 import * as Progress from 'react-native-progress';
+import HomeHeader from '../../../components/HomeHeader';
 
 const HomeScreen = () => {
   const { user } = useUser();
@@ -108,6 +109,7 @@ const HomeScreen = () => {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <HomeHeader />
           <View className="flex-1 justify-center items-center p-5 bg-white">
             <Text className="text-2xl font-bold text-indigo-600 mb-6">Scan the QR Code</Text>
 
