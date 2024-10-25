@@ -11,27 +11,20 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import './AdminHome.css';  // Import the CSS file
+import './AdminHome.css';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export const AdminHome = () => {
   const [activeTab, setActiveTab] = useState('Vehicles');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Define chart data and options outside the return statement
   const data = {
     labels: ['Fuel Stations', 'Vehicles'],
     datasets: [
       {
         label: 'Number of Registrations',
-        data: [500, 1500], // Example data for fuel stations and vehicles
+        data: [500, 1500],
         backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
         borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
         borderWidth: 1,
@@ -42,13 +35,8 @@ export const AdminHome = () => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Registered Fuel Stations and Vehicles',
-      },
+      legend: { position: 'top' },
+      title: { display: true, text: 'Registered Fuel Stations and Vehicles' },
     },
   };
 
@@ -64,45 +52,47 @@ export const AdminHome = () => {
     { id: 'S003', name: 'Station Z' },
   ];
 
-  // Function to render table based on active tab
-  const renderTable = () => {
-    const data = activeTab === 'Vehicles' ? vehiclesData : stationsData;
-    return (
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Actions</th>
+  // Filtered data based on search term (searching by both ID and name)
+  const filteredData = (activeTab === 'Vehicles' ? vehiclesData : stationsData).filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const renderTable = () => (
+    <table className="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData.map((item) => (
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.name}</td>
+            <td>
+              <button className="details-btn" onClick={() => alert(`Showing details for ${item.name}`)}>
+                Show Details
+              </button>
+              <button className="delete-btn" onClick={() => alert(`Deleting ${item.name}`)}>
+                Delete
+              </button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>
-                <button className="details-btn" onClick={() => alert(`Showing details for ${item.name}`)}>Show Details</button>
-                <button className="delete-btn" onClick={() => alert(`Deleting ${item.name}`)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
+        ))}
+      </tbody>
+    </table>
+  );
 
   return (
     <div>
       <Header />
       <div className="chart-container">
-        {/* Render Bar chart here */}
         <Bar data={data} options={options} />
       </div>
 
-      {/* Tab Selection */}
       <div className="tab-container">
         <button className={activeTab === 'Vehicles' ? 'active-tab' : ''} onClick={() => setActiveTab('Vehicles')}>
           Vehicles
@@ -112,9 +102,24 @@ export const AdminHome = () => {
         </button>
       </div>
 
-      {/* Conditionally Render Table */}
+      <div className="search-center">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder={`Search by ID or Name in ${activeTab}`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
+      </div>
+
       <div className="table-container">
-        {activeTab === 'Vehicles' ? <h3>Vehicles</h3> : <h3>Stations</h3>}
+        {activeTab === 'Vehicles' ? (
+          <h3 style={{ color: '#ff4b2b', marginBottom: '5px', fontWeight: 'bolder', fontSize: '24px' }}>Details of Vehicles</h3>
+        ) : (
+          <h3 style={{ color: '#ff4b2b', marginBottom: '5px', fontWeight: 'bolder', fontSize: '24px' }}>Details of Stations</h3>
+        )}
         {renderTable()}
       </div>
 

@@ -101,3 +101,19 @@ body {
     background-color: #c82333;
   }
   
+  .search-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .search-input {
+    width: 20%; /* Set the width to 20% of the parent container */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

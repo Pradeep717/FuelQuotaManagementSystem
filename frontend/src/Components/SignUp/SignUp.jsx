@@ -25,12 +25,13 @@ const SignUp = () => {
             <input type="text" placeholder="Name" required />
             <input type="email" placeholder="Email" required />
             <input type="password" placeholder="Password" required />
+            {/* <input type="confirmpassword" placeholder="Confirm Password" required /> */}
             <input type="phoneNumber" placeholder="Phone Number" required />
             <div className="role">
-              <label htmlFor="Role">Choose a role: </label>
-              <select name="Role" id="Role">
-                <option value="Vehicle">Vehicle</option>
-                <option value="Station">Station</option>
+              <label htmlFor="Role" style={{ color: "#8280a3" }}>Choose a role: </label>
+              <select  name="Role" id="Role" style={{ color: "#8280a3" }}>
+                <option value="Vehicle" style={{ color: "#8280a3" }}>Vehicle Owner</option>
+                <option value="Station" style={{ color: "#8280a3" }}>Station Owner</option>
               </select>
             </div>
 
