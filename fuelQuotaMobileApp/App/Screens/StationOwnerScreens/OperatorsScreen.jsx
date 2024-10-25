@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, Modal, Button, Alert } from 'react-native';
+import { View, Text, TextInput, FlatList, TouchableOpacity, Modal, Button, Alert, Image, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import axios from 'axios';
 import { API_URL } from '@env';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import images from '../../../constants/images';
 
 const OperatorsScreen = () => {
   const [operators, setOperators] = useState([]);
@@ -74,59 +75,72 @@ const OperatorsScreen = () => {
   };
 
   return (
-    <View className="flex-1 p-4 pt-8">
-      <Button title="Add Operator" onPress={() => setIsModalVisible(true)} />
+    <View className="flex-1 bg-white">
+      <Image source={images.gasOperators} className="w-full h-[320px] " resizeMode="contain" />
 
-      <View className="flex-row w-full items-center justify-between border p-2 rounded-2xl mb-6 h-12">
-        <TextInput className="w-full-[2px]" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} />
-        <AntDesign name="search1" size={24} color="#ff4b2b" />
+      <View className="mt-8 bottom-5 w-full">
+        <TouchableOpacity onPress={() => setIsModalVisible(true)} className="bg-red-500 py-3 rounded-full mx-4">
+          <Text className="text-center text-white font-bold text-lg">Add Operator</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* <TextInput className="border p-2 mb-4 mt-4" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} /> */}
-      <View className="h-[1px] bg-gray-300 mb-4" />
+      <View className="flex-1 px-4 ">
+        <View className="flex-row w-full items-center justify-between border px-2 mt-4 rounded-2xl mb-6 h-12">
+          <TextInput className="flex-auto" placeholder="Search by name..." value={searchQuery} onChangeText={setSearchQuery} />
+          <AntDesign name="search1" size={24} color="#ff4b2b" />
+        </View>
 
-      <FlatList
-        data={searchOperators()}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => setSelectedOperator(item)} className="p-2 border-b">
-            <View className="flex-row justify-between">
-              <Text>{item.name}</Text>
+        <View className="h-[1px] bg-black " />
+
+        <FlatList
+          data={searchOperators()}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => setSelectedOperator(item)} className="p-2 border-b">
+              <View className="flex-row justify-between ">
+                <Text className="text-lg mt-2 mb-2">{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+
+        {/* Modal for adding a new operator */}
+        <Modal visible={isModalVisible} transparent>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="flex-1 justify-center items-center bg-black/50 px-4">
+              <View className="bg-white py-8 px-2 rounded-lg w-full justify-center items-center">
+                <TextInput className="border h-10  rounded-lg w-11/12 p-2 mb-4" placeholder="Name" value={name} onChangeText={setName} />
+                <TextInput className="border h-10  rounded-lg w-11/12 p-2 mb-4" placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
+                <TextInput className="border h-10  rounded-lg w-11/12 p-2 mb-4" placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+                <TextInput className="border h-10  rounded-lg w-11/12 p-2 mb-4" placeholder="Phone Number" value={phoneNumber} onChangeText={setPhoneNumber} keyboardType="phone-pad" />
+
+                <View className="mt-8 bottom-5 w-full">
+                  <TouchableOpacity onPress={addOperator} className="bg-red-500 py-3 rounded-full mx-4">
+                    <Text className="text-center text-white font-bold text-lg">Add</Text>
+                  </TouchableOpacity>
+                </View>
+                <Button title="Cancel" onPress={() => setIsModalVisible(false)} color="red" />
+              </View>
             </View>
-          </TouchableOpacity>
-        )}
-      />
+          </TouchableWithoutFeedback>
+        </Modal>
 
-      {/* Modal for adding a new operator */}
-      <Modal visible={isModalVisible} transparent>
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white p-4 rounded-lg w-3/4">
-            <TextInput placeholder="Name" value={name} onChangeText={setName} className="border p-2 mb-2" />
-            <TextInput placeholder="Email" value={email} onChangeText={setEmail} className="border p-2 mb-2" keyboardType="email-address" />
-            <TextInput placeholder="Password" value={password} onChangeText={setPassword} className="border p-2 mb-2" secureTextEntry />
-            <TextInput placeholder="Phone Number" value={phoneNumber} onChangeText={setPhoneNumber} className="border p-2 mb-2" keyboardType="phone-pad" />
-
-            <Button title="Add" onPress={addOperator} />
-            <Button title="Cancel" onPress={() => setIsModalVisible(false)} color="red" />
+        {/* Modal for viewing operator details */}
+        <Modal visible={!!selectedOperator} transparent>
+          <View className="flex-1 justify-center items-center bg-black/50">
+            <View className="bg-white p-4 rounded-lg w-10/12">
+              {selectedOperator && (
+                <>
+                  <Text className="text-lg mb-2">Name: {selectedOperator.name}</Text>
+                  <Text className="text-lg mb-2">Email: {selectedOperator.email}</Text>
+                  <Button title="Remove" onPress={() => removeOperator(selectedOperator.id)} color="red" />
+                  <Button title="Close" onPress={() => setSelectedOperator(null)} color={'gray'} />
+                </>
+              )}
+            </View>
           </View>
-        </View>
-      </Modal>
-
-      {/* Modal for viewing operator details */}
-      <Modal visible={!!selectedOperator} transparent>
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white p-4 rounded-lg w-3/4">
-            {selectedOperator && (
-              <>
-                <Text>Name: {selectedOperator.name}</Text>
-                <Text>Email: {selectedOperator.email}</Text>
-                <Button title="Remove" onPress={() => removeOperator(selectedOperator.id)} color="red" />
-                <Button title="Close" onPress={() => setSelectedOperator(null)} />
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
+        </Modal>
+      </View>
     </View>
   );
 };
