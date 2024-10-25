@@ -121,7 +121,8 @@ const getAllVehicles = async (req, res) => {
 // Get vehicle by id
 const getVehicleById = async (req, res) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.id).select("-updatedAt");
+    const vehicle = await Vehicle.findById(req.params.id).select("-updatedAt")
+      .populate("vehicleOwner", "name");
     res.status(200).json(vehicle);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -132,13 +133,12 @@ const getVehicleById = async (req, res) => {
 // Delete vehicle by id
 const deleteVehicle = async (req, res) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.id);
-    if (!vehicle) {
-      return res.status(404).json({ message: "Vehicle not found" });
+    const result = await Vehicle.findByIdAndDelete(req.params.id);
+    if (!result) {
+      res.status(404).json({ message: "Vehicle not found" });
+      return;
     }
-
-    await vehicle.remove();
-    res.status(200).json({ message: "Vehicle removed" });
+    res.status(200).json({ message: "Vehicle deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in deleteVehicle: ", error.message);
