@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, Alert, Image, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { API_URL } from '@env';
 import { useUser } from '../../../context/UserContext';
+import images from '../../../constants/images';
 
 const ProfileScreen = () => {
   const { logoutUser, user, updateUser } = useUser();
@@ -31,12 +32,18 @@ const ProfileScreen = () => {
   };
 
   return (
-    <View className="flex-1 justify-center p-10 bg-white">
-      <View className="h-20 w-20 rounded-full bg-blue-500 justify-center items-center mb-2 self-center">
-        <Text className="text-3xl font-bold text-white">{user.name.charAt(0).toUpperCase()}</Text>
-      </View>
+    <View className="flex-1 justify-center  bg-white">
+      <ImageBackground
+        source={images.idCard} // Replace with your image id or URI
+        className="flex-1 justify-center w-full h-[320px]"
+        resizeMode="cover"
+      >
+        <View className="h-[130px] w-[130px] rounded-full bg-gray-500 border-baseColor border-[4px] justify-center items-center mt-[200px] self-center">
+          <Text className="text-5xl font-bold text-white">{user.name.charAt(0).toUpperCase()}</Text>
+        </View>
+      </ImageBackground>
 
-      <View className="flex-row justify-end mb-4 pr-4">
+      <View className="flex-row justify-end mb-2 pr-4">
         {/* {!isEditing && <Text className="text-xl">Edit </Text>} */}
         <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
           <Ionicons name={isEditing ? 'close' : 'pencil'} size={24} color="#007BFF" />
@@ -45,18 +52,20 @@ const ProfileScreen = () => {
 
       {isEditing ? (
         <>
-          <Text className="text-lg mb-1 text-gray-700">Name:</Text>
-          <TextInput value={name} onChangeText={setName} placeholder="Name" className="border border-gray-300 rounded p-2 mb-4 w-full" />
+          <View className="flex-1 mt-16">
+            <Text className="text-lg mb-1 text-gray-700">Name:</Text>
+            <TextInput value={name} onChangeText={setName} placeholder="Name" className="border border-gray-300 rounded p-2 mb-4 w-full" />
 
-          <Text className="text-lg mb-1 text-gray-700">Email:</Text>
-          <TextInput value={email} onChangeText={setEmail} placeholder="Email" className="border border-gray-300 rounded p-2 mb-4 w-full" keyboardType="email-address" />
+            <Text className="text-lg mb-1 text-gray-700">Email:</Text>
+            <TextInput value={email} onChangeText={setEmail} placeholder="Email" className="border border-gray-300 rounded p-2 mb-4 w-full" keyboardType="email-address" />
 
-          <Text className="text-lg mb-1 text-gray-700">Phone Number:</Text>
-          <TextInput value={phoneNumber} onChangeText={setPhoneNumber} placeholder="Phone Number" className="border border-gray-300 rounded p-2 mb-4 w-full" keyboardType="phone-pad" />
+            <Text className="text-lg mb-1 text-gray-700">Phone Number:</Text>
+            <TextInput value={phoneNumber} onChangeText={setPhoneNumber} placeholder="Phone Number" className="border border-gray-300 rounded p-2 mb-4 w-full" keyboardType="phone-pad" />
 
-          <View className="flex-row justify-between w-full">
-            <Button title="Save" onPress={handleSave} color="#4CAF50" />
-            <Button title="Cancel" onPress={() => setIsEditing(false)} color="#f05a5b" />
+            <View className="flex-row justify-between w-full">
+              <Button title="Save" onPress={handleSave} color="#4CAF50" />
+              <Button title="Cancel" onPress={() => setIsEditing(false)} color="#f05a5b" />
+            </View>
           </View>
         </>
       ) : (
