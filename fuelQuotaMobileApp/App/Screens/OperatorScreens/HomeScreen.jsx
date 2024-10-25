@@ -6,6 +6,7 @@ import { API_URL } from '@env';
 import { useUser } from '../../../context/UserContext';
 import * as Progress from 'react-native-progress';
 import HomeHeader from '../../../components/HomeHeader';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const HomeScreen = () => {
   const { user } = useUser();
@@ -111,7 +112,11 @@ const HomeScreen = () => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <HomeHeader />
           <View className="flex-1 justify-center items-center p-5 bg-white">
-            <Text className="text-2xl font-bold text-indigo-600 mb-6">Scan the QR Code</Text>
+            {!scanned && (
+              <Text className="text-2xl font-bold text-baseColor mb-4">
+                Scan the QR Code <AntDesign name="qrcode" size={24} color="black" />
+              </Text>
+            )}
 
             {!scanned && (
               <View className="border border-indigo-300 rounded-lg overflow-hidden shadow-lg">
@@ -120,14 +125,14 @@ const HomeScreen = () => {
             )}
 
             {scanned && quotaDetails && (
-              <View className="mt-6 p-4 bg-indigo-200 rounded-lg w-11/12 items-center">
-                <Text className="text-lg text-indigo-800">Quota Details:</Text>
-                <Progress.Circle size={120} progress={quotaDetails.usedQuota / quotaDetails.allocatedQuota} showsText={false} color="indigo" unfilledColor="#e6e6e6" borderWidth={8} style={{ borderRadius: 60 }} />
-                <Text className="mt-2 text-gray-700">{`${Math.round((quotaDetails.usedQuota / quotaDetails.allocatedQuota) * 100)}%`}</Text>
-                <Text className="mt-2 text-gray-700">Remaining Quota: {quotaDetails.remainingQuota} L</Text>
+              <View className="mt-6 p-4 bg-gray-100 rounded-lg w-11/12 items-center">
+                <Text className="text-xl mb-2 text-secondColor font-semibold">Quota Details:</Text>
+                <Progress.Circle size={150} progress={quotaDetails.usedQuota / quotaDetails.allocatedQuota} showsText={false} color="gray" unfilledColor="#ff4b2b" borderWidth={10} style={{ borderRadius: 60 }} />
+                <Text className="mt-2 text-gray-700 text-4xl">{`${Math.round((quotaDetails.usedQuota / quotaDetails.allocatedQuota) * 100)}%`}</Text>
+                <Text className="mt-2 text-gray-700 text-xl">Remaining Quota: {quotaDetails.remainingQuota} L</Text>
 
                 <TouchableOpacity
-                  className="mt-4 bg-indigo-600 px-5 py-3 rounded-full"
+                  className="mt-4 bg-baseColor px-5 py-3 rounded-full"
                   onPress={() => {
                     setShowForm(true);
                   }}
@@ -138,11 +143,11 @@ const HomeScreen = () => {
             )}
 
             {showForm && quotaDetails && (
-              <View className="mt-6 p-4 bg-white rounded-lg w-11/12">
-                <TextInput value={literPumped} onChangeText={setLiterPumped} keyboardType="numeric" placeholder="Enter liters to pump" className="border border-gray-300 p-2 rounded-md mb-4" />
+              <View className="mt-6 pt-4 bg-white rounded-lg w-11/12">
+                <TextInput value={literPumped} onChangeText={setLiterPumped} keyboardType="numeric" placeholder="Enter liters to pump" className="border border-gray-300 h-[40px] rounded-xl mb-4 px-4 " />
                 {parseFloat(literPumped) > quotaDetails.remainingQuota && <Text className="text-red-600">Entered liters exceed remaining quota!</Text>}
-                <TouchableOpacity className={`mt-2 px-5 py-3 rounded-full ${parseFloat(literPumped) > quotaDetails.remainingQuota ? 'bg-gray-400' : 'bg-indigo-600'}`} disabled={parseFloat(literPumped) > quotaDetails.remainingQuota} onPress={handlePumpingSubmit}>
-                  <Text className="text-white text-lg font-medium">Submit</Text>
+                <TouchableOpacity className={`mt-2  px-5 py-3 rounded-full ${parseFloat(literPumped) > quotaDetails.remainingQuota ? 'bg-gray-400' : 'bg-baseColor'}`} disabled={parseFloat(literPumped) > quotaDetails.remainingQuota} onPress={handlePumpingSubmit}>
+                  <Text className="text-white text-lg font-medium text-center">Submit</Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity
                   className="mt-2 bg-indigo-600 px-5 py-3 rounded-full"
@@ -157,24 +162,24 @@ const HomeScreen = () => {
             )}
 
             {!scanned && (
-              <View className="mt-6 bg-indigo-100 p-4 rounded-lg w-11/12">
-                <Text className="text-lg text-indigo-800">Previous Vehicle: {scannedData || 'N/A'}</Text>
-                <Text className="text-lg text-indigo-800">Last Entered Liters: {literPumped || 'N/A'} L</Text>
+              <View className="mt-4 bg-gray-500 p-4 rounded-lg w-11/12">
+                <Text className="text-lg text-white">Previous Vehicle: {scannedData || 'N/A'}</Text>
+                <Text className="text-lg text-white">Last Entered Liters: {literPumped || 'N/A'} L</Text>
               </View>
             )}
 
             {scanned && (
-              <View className="mt-6 bg-indigo-100 p-4 rounded-lg w-11/12">
+              <View className="mt-6 rounded-lg w-11/12">
                 {/* <Text className="text-lg text-indigo-800">Previous Vehicle: {scannedData}</Text>
                 <Text className="text-lg text-indigo-800">Last Entered Liters: {literPumped} L</Text> */}
                 <TouchableOpacity
-                  className="mt-2 bg-indigo-600 px-5 py-3 rounded-full"
+                  className="mt-2 bg-gray-500 px-5 py-3 rounded-full border-[2px] border-baseColor"
                   onPress={() => {
                     setScanned(false);
                     setShowForm(false);
                   }}
                 >
-                  <Text className="text-white text-lg font-medium">Tap to Scan Again</Text>
+                  <Text className="text-white text-lg font-medium text-center">Tap to Scan Again</Text>
                 </TouchableOpacity>
               </View>
             )}
