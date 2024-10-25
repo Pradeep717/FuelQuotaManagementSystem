@@ -95,7 +95,9 @@ const getStationById = async (req, res) => {
   const stationId = req.params.id;
 
   try {
-    const station = await FuelStation.findById(stationId);
+    const station = await FuelStation.findById(stationId)
+      .populate("fuelStationOwner", "name email")
+      .populate(`registeredVehicles.vehicle`, "vehicleNumber vehicleType");
     if (!station) {
       return res.status(404).json({ message: "Station not found" });
     }
