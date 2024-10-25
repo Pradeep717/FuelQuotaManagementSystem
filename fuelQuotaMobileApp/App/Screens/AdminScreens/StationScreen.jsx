@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TextInput, TouchableOpacity, Modal, Button, Alert } from 'react-native';
+import { View, Text, FlatList, TextInput, TouchableOpacity, Modal, Button, Alert, Image } from 'react-native';
 import axios from 'axios';
 import { API_URL } from '@env';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import images from '../../../constants/images';
 
 const StationScreen = () => {
   const [stations, setStations] = useState([]);
@@ -60,59 +62,67 @@ const StationScreen = () => {
   };
 
   return (
-    <View className="flex-1 p-4 pt-10">
-      <TextInput placeholder="Search stations Name ..." value={searchTerm} onChangeText={handleSearch} className="border p-2 rounded mb-4" />
+    <View className="flex-1">
+      <Image source={images.gasStation} className="w-full h-[320px] " resizeMode="contain" />
 
-      <FlatList
-        data={filteredStations}
-        keyExtractor={(item) => item._id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleStationClick(item)} className="p-4 pt-2 border rounded mb-2">
-            <Text className="font-bold text-lg"> {item.stationName}</Text>
-            <Text>Location: {item.location}</Text>
-          </TouchableOpacity>
-        )}
-      />
-
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <View className="flex-1 justify-center items-center bg-opacity-50">
-          <View className="bg-white p-8 rounded-lg w-8/12 max-h-3/4">
-            {selectedStation && (
-              <>
-                <Text className="text-3xl font-semibold mb-4">{selectedStation.stationName}</Text>
-                <Text>Location: {selectedStation.location}</Text>
-                <Text>Station_regNumber: {selectedStation.station_regNumber}</Text>
-                <Text>Station Owner: {selectedStation.fuelStationOwner.name}</Text>
-
-                {selectedStation.registeredVehicles && selectedStation.registeredVehicles.length > 0 ? (
-                  <>
-                    <Text className="font-bold mt-4">Registered Vehicles:</Text>
-                    <FlatList
-                      data={selectedStation.registeredVehicles}
-                      keyExtractor={(item) => item._id.toString()}
-                      renderItem={({ item }) => (
-                        <View className="border-b border-gray-300 py-2">
-                          <Text>Vehicle ID: {item.vehicle.vehicleNumber}</Text>
-                          <Text>Vehicle: {item.vehicle.vehicleType}</Text>
-                          <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
-                        </View>
-                      )}
-                      style={{ maxHeight: 200 }}
-                    />
-                  </>
-                ) : (
-                  <Text className="mt-4">No registered vehicles </Text>
-                )}
-
-                <View className="flex-row justify-between mt-4">
-                  <Button title="Delete" onPress={handleDeleteStation} color="red" />
-                  <Button title="Close" onPress={closeModal} />
-                </View>
-              </>
-            )}
-          </View>
+      <View className="flex-1 p-4 pt-2 ">
+        {/* <TextInput placeholder="Search stations Name ..." value={searchTerm} onChangeText={handleSearch} className="border p-2 rounded mb-4" /> */}
+        <View className="flex-row items-center justify-between border p-2 rounded-2xl mb-6 h-12">
+          <TextInput placeholder="Search vehicles Number ..." value={searchTerm} onChangeText={handleSearch} />
+          <AntDesign name="search1" size={24} color="#ff4b2b" />
         </View>
-      </Modal>
+
+        <FlatList
+          data={filteredStations}
+          keyExtractor={(item) => item._id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => handleStationClick(item)} className="p-4 pt-2 border rounded-xl mb-2">
+              <Text className="font-bold text-lg"> {item.stationName}</Text>
+              <Text>Location: {item.location}</Text>
+            </TouchableOpacity>
+          )}
+        />
+
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <View className="flex-1 justify-center items-center bg-opacity-50">
+            <View className="bg-white p-8 rounded-lg w-8/12 max-h-3/4">
+              {selectedStation && (
+                <>
+                  <Text className="text-3xl font-semibold mb-4">{selectedStation.stationName}</Text>
+                  <Text>Location: {selectedStation.location}</Text>
+                  <Text>Station_regNumber: {selectedStation.station_regNumber}</Text>
+                  <Text>Station Owner: {selectedStation.fuelStationOwner.name}</Text>
+
+                  {selectedStation.registeredVehicles && selectedStation.registeredVehicles.length > 0 ? (
+                    <>
+                      <Text className="font-bold mt-4">Registered Vehicles:</Text>
+                      <FlatList
+                        data={selectedStation.registeredVehicles}
+                        keyExtractor={(item) => item._id.toString()}
+                        renderItem={({ item }) => (
+                          <View className="border-b border-gray-300 py-2">
+                            <Text>Vehicle ID: {item.vehicle.vehicleNumber}</Text>
+                            <Text>Vehicle: {item.vehicle.vehicleType}</Text>
+                            <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
+                          </View>
+                        )}
+                        style={{ maxHeight: 200 }}
+                      />
+                    </>
+                  ) : (
+                    <Text className="mt-4">No registered vehicles </Text>
+                  )}
+
+                  <View className="flex-row justify-between mt-4">
+                    <Button title="Delete" onPress={handleDeleteStation} color="red" />
+                    <Button title="Close" onPress={closeModal} />
+                  </View>
+                </>
+              )}
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };

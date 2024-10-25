@@ -14,6 +14,8 @@ const AdminTabs = () => (
   <Tab.Navigator
     screenOptions={{
       headerShown: false,
+      tabBarActiveTintColor: '#ff4b2b',
+      tabBarInactiveTintColor: '#999',
     }}
   >
     <Tab.Screen
@@ -33,7 +35,7 @@ const AdminTabs = () => (
       }}
     />
     <Tab.Screen
-      name="profile"
+      name="aProfile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
