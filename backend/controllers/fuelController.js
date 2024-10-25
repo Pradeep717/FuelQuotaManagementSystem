@@ -12,10 +12,10 @@ export const registerFuelTransaction = async (req, res) => {
   session.startTransaction();
 
   try {
-    const { qrCode, fuelStationId, litresPumped } = req.body;
+    const { vehicleNumber, stationOperatorID, litresPumped } = req.body;
 
     // Find the vehicle by QR code
-    const vehicle = await Vehicle.findOne({ qrCode }).session(session);
+    const vehicle = await Vehicle.findOne({ vehicleNumber }).session(session);
     if (!vehicle) {
       res.status(400).json({ message: "Vehicle not found" });
       return;
@@ -36,10 +36,8 @@ export const registerFuelTransaction = async (req, res) => {
       return;
     }
 
-    // Find the fuel station
-    const fuelStation = await FuelStation.findById(fuelStationId).session(
-      session
-    );
+    // Find the fuel station where the station operator is working
+    const fuelStation = await FuelStation.findOne({ stationOperators: stationOperatorID }).session( session );
     if (!fuelStation) {
       res.status(400).json({ message: "Fuel Station not found" });
       return;
@@ -102,9 +100,9 @@ export const registerFuelTransaction = async (req, res) => {
 // Check fuel quota
 export const checkFuelQuota = async (req, res) => {
   try {
-    const { qrCode } = req.body;
+    const { vehicleNumber } = req.body;
 
-    const vehicle = await Vehicle.findOne({ qrCode });
+    const vehicle = await Vehicle.findOne({ vehicleNumber });
     if (!vehicle) {
       res.status(400).json({ message: "Vehicle not found" });
       return;
@@ -116,14 +114,17 @@ export const checkFuelQuota = async (req, res) => {
       return;
     }
 
-    if (fuelQuota.remainingQuota > 0) {
-      res.status(200).json({
-        vehicle: vehicle._id,
-        remainingQuota: fuelQuota.remainingQuota,
-      });
-    } else {
-      res.status(400).json({ message: "Insufficient Quota" });
-    }
+    const usedQuota = fuelQuota.allocatedQuota - fuelQuota.remainingQuota;
+    const status = fuelQuota.remainingQuota > 0;
+
+    res.status(200).json({
+      vehicle: vehicle._id,
+      remainingQuota: fuelQuota.remainingQuota,
+      allocatedQuota: fuelQuota.allocatedQuota,
+      usedQuota: usedQuota,
+      message: status ? "Sufficient quota available" : "Insufficient quota",
+      status: status
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log("Error in checkFuelQuota: ", error.message);
