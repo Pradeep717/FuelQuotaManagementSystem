@@ -69,16 +69,18 @@ const HomeScreen = () => {
       <View className="flex-1 justify-center px-4 bg-white">
         {!isRegistered ? (
           <>
-            <Text className="text-lg mb-2">Station Name:</Text>
-            <TextInput value={stationName} onChangeText={setStationName} placeholder="Enter Station Name" className="border border-gray-300 rounded p-2 mb-4" />
+            <ScrollView className="flex-1 mt-10">
+              <Text className="text-lg mb-2">Station Name:</Text>
+              <TextInput value={stationName} onChangeText={setStationName} placeholder="Enter Station Name" className="border border-gray-300 rounded p-2 mb-4" />
 
-            <Text className="text-lg mb-2">Location:</Text>
-            <TextInput value={location} onChangeText={setLocation} placeholder="Enter Location" className="border border-gray-300 rounded p-2 mb-4" />
+              <Text className="text-lg mb-2">Location:</Text>
+              <TextInput value={location} onChangeText={setLocation} placeholder="Enter Location" className="border border-gray-300 rounded p-2 mb-4" />
 
-            <Text className="text-lg mb-2">Station Registration Number:</Text>
-            <TextInput value={stationRegNumber} onChangeText={setStationRegNumber} placeholder="Enter Registration Number" className="border border-gray-300 rounded p-2 mb-4" />
+              <Text className="text-lg mb-2">Station Registration Number:</Text>
+              <TextInput value={stationRegNumber} onChangeText={setStationRegNumber} placeholder="Enter Registration Number" className="border border-gray-300 rounded p-2 mb-4" />
 
-            <Button title="Register Station" onPress={handleRegister} color="#007BFF" />
+              <Button title="Register Station" onPress={handleRegister} color="#ff4b2b" />
+            </ScrollView>
           </>
         ) : (
           <>
