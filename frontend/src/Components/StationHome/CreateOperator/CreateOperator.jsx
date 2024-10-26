@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import './CreateOperator.css';
-import Header from '../../Header/Header';
-import Footer from '../../footer/footer';
+import React, { useState } from "react";
+import "./CreateOperator.css";
+import Header from "../../Header/Header";
+import Footer from "../../footer/footer";
+import { useNavigate } from "react-router-dom";
 
 const CreateOperator = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    operatorId: '',
-    stationId: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    mobileNumber: '',
+    name: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
   });
+  const [responseMessage, setResponseMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,78 +22,85 @@ const CreateOperator = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle form submission
-    console.log(formData);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/stations/addStationOperator",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setResponseMessage("Operator added successfully!");
+
+        setTimeout(() => {
+          navigate("/s-home"); // Navigate to the desired route after 2 seconds
+        }, 2000);
+      } else {
+        setResponseMessage(data.message || "Error adding operator.");
+      }
+    } catch (error) {
+      setResponseMessage("Error adding operator.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div>
-        <Header/>
-        <div className="register-form-container">
+      <Header />
+      <div className="register-form-container">
         <h1 className="form-title">Operator Registration</h1>
         <form onSubmit={handleSubmit}>
-            <input
+          <input
             type="text"
             name="name"
             placeholder="Name"
             value={formData.name}
             onChange={handleChange}
             required
-            />
-            <input
+          />
+          <input
             type="text"
-            name="operatorId"
-            placeholder="Operator ID"
-            value={formData.operatorId}
+            name="email"
+            placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
             required
-            />
-            <input
-            type="text"
-            name="stationId"
-            placeholder="Station ID"
-            value={formData.stationId}
-            onChange={handleChange}
-            required
-            />
-            <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            />
-            <input
+          />
+          <input
             type="password"
             name="password"
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
             required
-            />
-            <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            />
-            <input
+          />
+          <input
             type="text"
-            name="mobileNumber"
-            placeholder="Mobile Number"
-            value={formData.mobileNumber}
+            name="phoneNumber"
+            placeholder="Phone Number"
+            value={formData.phoneNumber}
             onChange={handleChange}
             required
-            />
-            <button type="submit" className="button">REGISTER</button>
+          />
+          <button type="submit" className="button" disabled={isLoading}>
+            {isLoading ? "Registering..." : "REGISTER"}
+          </button>
         </form>
-        </div>
-        <Footer/>
+        {responseMessage && <p>{responseMessage}</p>}
+      </div>
+      <Footer />
     </div>
   );
 };
