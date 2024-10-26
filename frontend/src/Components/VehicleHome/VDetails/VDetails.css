@@ -47,3 +47,8 @@ body {
   footer {
     margin-top: 50px;
   }
+
+  .qr-container{
+    display: flex;
+    justify-content: center;
+  }
