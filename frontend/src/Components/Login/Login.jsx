@@ -1,42 +1,35 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
-import { loginUser } from '../../api/api'; // Import the login function you created
-
-
-
+import { loginUser } from '../../api/api'; // Import your login function
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-  
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-          // Make the API call and retrieve user data
-          const user = await loginUser({ email, password });
-          
-          // Check if required data is present
-          if (user && user.role) {
-            console.log('Logged in user:', user);
-      
-            // Navigate based on role
-            if (user.role === 'admin') navigate('/admin');
-            else if (user.role === 'vehicle_owner') navigate('/vehicleHome');
-            else if (user.role === 'station_owner') navigate('/s-home');
-            else throw new Error("User role is not recognized.");
-          } else {
-            throw new Error("Unexpected response format: Missing role.");
-          }
-        } catch (error) {
-          console.error('Login failed:', error);
-          alert('Login failed. Please check your credentials.');
-        }
-      };
-      
-      
-      
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      // Make the API call and retrieve user data
+      const user = await loginUser({ email, password });
+      console.log('Logged in user:', user);
+
+      // Check if required data is present
+      if (user && user.role) {
+        // Navigate based on role
+        if (user.role === 'admin') navigate('/admin');
+        else if (user.role === 'vehicle_owner') navigate('/vehicleHome');
+        else if (user.role === 'station_owner') navigate('/s-home');
+        else throw new Error("User role is not recognized.");
+      } else {
+        throw new Error("Unexpected response format: Missing role.");
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Login failed. Please check your credentials.');
+    }
+  };
 
   return (
     <div className="container-log-sign">

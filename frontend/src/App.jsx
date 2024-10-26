@@ -8,7 +8,7 @@ import Start from './Components/Start/Start'
 import Login from './Components/Login/Login'
 import SignUp from './Components/SignUp/SignUp';
 import { AdminHome } from './Components/AdminHome/AdminHome';
-import VehicleHome from './Components/VehicleHome/vehicleHome';
+import VehicleHome from './Components/VehicleHome/VehicleHome';
 import VehicleRegister from './Components/VehicleHome/VehicleRegister/VehicleRegister';
 import FuelQuota from './Components/VehicleHome/FuelQuota/FuelQuota';
 import Prevlogs from './Components/VehicleHome/Prevlogs/Prevlogs';
@@ -19,6 +19,7 @@ import Operator from './Components/Operator/Operator';
 import StationQuota from './Components/StationHome/StationQuota/StationQuota';
 import StationLogs from './Components/StationHome/StationLogs/StationLogs';
 import StationRegister from './Components/StationHome/StationRegister/StationRegister';
+import VDetails from './Components/VehicleHome/VDetails/VDetails';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       <Route path='/s-fuel-quota' element={<StationQuota/>}/>
       <Route path='/s-prev-logs' element={<StationLogs/>}/>
       <Route path='/s-register' element={<StationRegister/>}/>
+      <Route path='/vehicle/:id' element={<VDetails />} />
     </Routes>
   </Router>
   )
