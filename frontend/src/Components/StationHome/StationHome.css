@@ -7,6 +7,7 @@
   }
 
 .station-name{
-  margin: 2%;
+  margin-top: 2%;
   color: #ff6b6b;
+  font-weight: bolder;
 }

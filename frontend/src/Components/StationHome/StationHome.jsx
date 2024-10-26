@@ -66,7 +66,6 @@ const StationHome = () => {
     <div>
       <Header />
       <div className="station-home-container">
-        <h1 className='station-name'>Station Home</h1>
         {isLoading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -74,37 +73,53 @@ const StationHome = () => {
         ) : (
           stations.map((station) => (
             <div key={station._id} className="station-card">
-              <h2>{station.stationName}</h2>
-              <p>Location: {station.location}</p>
-              <h3>Operators:</h3>
+              <h1 className="station-name">{station.stationName}</h1>
+              <p style={{ color:"#ff3b1b",fontSize:"15px",fontWeight:"bolder"}}>Location: {station.location}</p>
+
+              <h3 className="station-name">Operators:</h3>
               {station.stationOperators.length > 0 ? (
-                <ul>
+                <ul className="operator-list">
                   {station.stationOperators.map((operatorId) => (
-                    <li key={operatorId}>
+                    <li key={operatorId} className="operator-item">
                       {operatorId}
-                      <button onClick={() => handleDeleteOperator(operatorId)}>Delete</button>
+                      <button className="delete-btn" onClick={() => handleDeleteOperator(operatorId)}>Delete</button>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>No operators available</p>
+                <p style={{ color:"#ff3b1b",fontSize:"15px"}}>No operators available</p>
               )}
-              <h3>Registered Vehicles:</h3>
+
+              <h3 className="station-name">Registered Vehicles:</h3>
               {station.registeredVehicles.length > 0 ? (
-                <ul>
+                <ul className="vehicle-list">
                   {station.registeredVehicles.map((vehicle) => (
-                    <li key={vehicle._id}>
+                    <li key={vehicle._id} className="vehicle-item">
                       {vehicle.vehicle ? `${vehicle.vehicle.vehicleNumber} (${vehicle.vehicle.vehicleType})` : 'Unknown Vehicle'}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>No registered vehicles</p>
+                <p style={{ color:"#ff3b1b",fontSize:"15px"}}>No registered vehicles</p>
+              )}
+
+              {/* Display vehicles with pumped fuel at this station */}
+              <h3 className='station-name'>Vehicles that Pumped Fuel:</h3>
+              {station.pumpedVehicles && station.pumpedVehicles.length > 0 ? (
+                <ul className="pumped-vehicle-list">
+                  {station.pumpedVehicles.map((vehicle) => (
+                    <li key={vehicle._id} className="vehicle-item">
+                      {vehicle.vehicle ? `${vehicle.vehicle.vehicleNumber} (${vehicle.vehicle.vehicleType}) - Pumped` : 'Unknown Vehicle'}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p style={{ color:"#ff3b1b",fontSize:"15px"}}>No vehicles have pumped fuel at this station</p>
               )}
             </div>
           ))
         )}
-        <div className="v-home">
+        <div style={{ marginTop:"2%"}} className="v-home">
           <Link to="/s-register">
             <div className="register card">
               <div className="card-content">
@@ -115,7 +130,7 @@ const StationHome = () => {
           <Link to="/create-operator">
             <div className="create-opera card">
               <div className="card-content">
-                <h1>Create an operator</h1>
+                <h1>Create an Operator</h1>
               </div>
             </div>
           </Link>
