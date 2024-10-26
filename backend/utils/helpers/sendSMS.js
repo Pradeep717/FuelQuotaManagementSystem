@@ -7,20 +7,20 @@ import axios from 'axios';
  */
 const sendSMS = async (to, message) => {
   try {
-    // const response = await axios.get('https://send.lk/sms/send.php', {
-    //   params: {
-    //     token: '1509|Y8kFWOl1AD0TBAZjZH3C5YJ1r9roIabTAHmFrPWn',
-    //     to,
-    //     from: 'DWT Edu msg',
-    //     message,
-    //   },
-    // });
+    const response = await axios.get('https://send.lk/sms/send.php', {
+      params: {
+        token: '1509|Y8kFWOl1AD0TBAZjZH3C5YJ1r9roIabTAHmFrPWn',
+        to,
+        from: 'DWT Edu msg',
+        message,
+      },
+    });
 
-    // if (response.status === 200) {
-    //   console.log('SMS sent successfully');
-    // } else {
-    //   console.error('Failed to send SMS:', response.data);
-    // }
+    if (response.status === 200) {
+      console.log('SMS sent successfully');
+    } else {
+      console.error('Failed to send SMS:', response.data);
+    }
     console.log('SMS sent successfully');
   } catch (error) {
     console.error('Error sending SMS:', error);
